@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Every string the pilot reads.
+
+    The protocol log is deliberately not here. It is English in every language, because it is
+    written to be pasted into a bug report, and a report nobody can read is worse than one in a
+    language its reader does not speak. LogSheet says so.
+
+    Equipment names, wire tags and file extensions are not translated either: `ARINC 702A`,
+    `Connext`, `FPN/RI`, `.fpl` and the model names are what Garmin calls them, and a pilot
+    matching this screen against the panel needs the same words on both.
+-->
+<resources>
+    <!-- The product name, the same in every language. -->
+    <string name="app_name" translatable="false">SendFPL</string>
+
+    <!-- Top bar and navigation. -->
+    <string name="action_log">Log</string>
+    <string name="action_about">About</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_clear">Clear</string>
+
+    <!-- The route box. -->
+    <string name="route_label">Route</string>
+    <!-- An example route, so it is a plausible one in the reader's own airspace. -->
+    <string name="route_placeholder">KSFO SAC V334 LIN KLAS</string>
+    <string name="route_help">Identifiers separated by spaces. Prefix a token with ! to force an airway, or with = to force a waypoint. Coordinates work too: N48.82/E2.62 or N48,8200/E2,62000.</string>
+    <string name="route_open_file">Open a route file</string>
+    <string name="route_procedures_warning">This route also carries a procedure or an approach, which the box above cannot show. Editing the text would drop it. The preview below is what will be sent.</string>
+    <string name="route_preview_title">ARINC 702A</string>
+    <plurals name="route_preview_size">
+        <item quantity="one">%1$d byte</item>
+        <item quantity="other">%1$d bytes</item>
+    </plurals>
+
+    <!-- Sending. -->
+    <string name="send_button">Send to navigator</string>
+    <string name="step_connecting">Connecting…</string>
+    <string name="step_handshaking">Handshaking…</string>
+    <string name="step_authenticating">Authenticating…</string>
+    <string name="step_negotiating">Reading capabilities…</string>
+    <string name="step_uploading">Uploading…</string>
+    <string name="step_working">Working…</string>
+
+    <string name="outcome_sent">Sent</string>
+    <string name="outcome_failed">Failed</string>
+    <!--
+        The navigator raises no dialog for an imported plan, so telling the pilot to confirm it
+        sends them looking for something that never appears. The quoted message and the menu path
+        are the unit's own English and stay in English in every translation, or a pilot goes
+        looking for a menu that does not exist.
+    -->
+    <string name="outcome_sent_detail">The navigator should now report \"1 new imported flight plan available for preview\". Open Flight Plan → Catalog on the unit to preview and accept it.</string>
+    <string name="outcome_stopped_at">Stopped at: %1$s</string>
+    <string name="outcome_see_log">See the protocol log</string>
+
+    <!-- Blockers on the home screen. -->
+    <string name="blocked_permission">Bluetooth permission is needed to reach the navigator.</string>
+    <string name="blocked_bluetooth_off">Bluetooth is off.</string>
+    <string name="action_grant_permission">Grant permission</string>
+    <string name="action_open_settings">Open settings</string>
+    <string name="action_enable_bluetooth">Turn on Bluetooth</string>
+
+    <string name="setup_needed_title">Credential needed</string>
+    <string name="setup_needed_body">The navigator will not talk to an unauthenticated client. Import the Connext credential once to continue.</string>
+    <string name="action_set_up">Set up</string>
+
+    <!-- The short safety statement, on the screen rather than only in the About sheet. -->
+    <string name="disclaimer_short">Not certified avionics. Check the plan on the navigator before you fly it. Not affiliated with Garmin.</string>
+
+    <!-- The device chip and the device sheet. -->
+    <string name="device_none_selected">No device selected</string>
+    <string name="device_chip_no_answer">%1$s (no answer)</string>
+    <string name="device_chip_checking">%1$s (checking…)</string>
+    <string name="devices_title">Paired devices</string>
+    <string name="devices_empty">No paired devices. Pair the navigator in Android Settings first. It will show its own confirmation prompt on the panel.</string>
+    <string name="device_connext_badge">Connext</string>
+    <!--
+        What the Garmin filter did, and how to undo it. Always shown when it hid something, so the
+        hiding is never silent: see bt/DeviceStatus.kt for why that is what makes it defensible.
+    -->
+    <plurals name="devices_hidden">
+        <item quantity="one">%1$d other device hidden.</item>
+        <item quantity="other">%1$d other devices hidden.</item>
+    </plurals>
+    <string name="devices_showing_all">Showing every paired device.</string>
+    <string name="devices_show_all">Show all</string>
+    <string name="devices_show_garmin_only">Garmin only</string>
+    <string name="device_address_with_state">%1$s (%2$s)</string>
+
+    <string name="device_label_checking">checking…</string>
+    <string name="device_label_connected">connected</string>
+    <string name="device_label_no_answer">no answer, %1$s</string>
+    <string name="device_label_answered">answered %1$s</string>
+
+    <string name="device_detail_no_connext">No Connext service. Probably not a navigator.</string>
+    <string name="device_detail_link_held">Another app may be holding the link</string>
+    <string name="device_detail_unreachable">Powered off or out of range. You can still try.</string>
+
+    <string name="device_icon_answered">answered</string>
+    <string name="device_icon_no_answer">no answer</string>
+
+    <string name="age_just_now">just now</string>
+    <plurals name="age_seconds">
+        <item quantity="one">%1$d s ago</item>
+        <item quantity="other">%1$d s ago</item>
+    </plurals>
+    <plurals name="age_minutes">
+        <item quantity="one">%1$d min ago</item>
+        <item quantity="other">%1$d min ago</item>
+    </plurals>
+    <plurals name="age_hours">
+        <item quantity="one">%1$d h ago</item>
+        <item quantity="other">%1$d h ago</item>
+    </plurals>
+
+    <string name="device_last_used_today">Last used today</string>
+    <string name="device_last_used_yesterday">Last used yesterday</string>
+    <string name="device_last_used_on">Last used %1$s</string>
+
+    <!-- What the navigator told us about itself. -->
+    <string name="session_title">Last session</string>
+    <string name="session_transport">Transport</string>
+    <string name="session_transport_value">max_sz %1$d, mx_out %2$d, retry %3$d ms</string>
+    <string name="session_session">Session</string>
+    <string name="session_v2">V2, sync id %1$d</string>
+    <string name="session_v1">V1</string>
+    <string name="session_max_route">Max route length</string>
+    <plurals name="session_max_route_value">
+        <item quantity="one">%1$d byte</item>
+        <item quantity="other">%1$d bytes</item>
+    </plurals>
+    <string name="session_elements">Elements</string>
+    <string name="session_waypoint_formats">Waypoint formats</string>
+    <string name="session_none_advertised">none advertised</string>
+
+    <string name="element_departure">departure</string>
+    <string name="element_arrival">arrival</string>
+    <string name="element_approach">approach</string>
+    <string name="element_waypoints">waypoints</string>
+    <string name="element_airways">airways</string>
+    <string name="element_holds">holds</string>
+    <string name="element_along_track">along track</string>
+
+    <string name="waypoint_format_published">published idents</string>
+    <string name="waypoint_format_latlon">lat/lon</string>
+    <string name="waypoint_format_pbpb">place bearing / place bearing</string>
+    <string name="waypoint_format_pbd">place bearing distance</string>
+
+    <!-- The navigator model picker. -->
+    <string name="model_title">Navigator model</string>
+    <string name="model_help">Pick the navigator you are sending to. The model sets how long identifiers and the route string may be, and it cannot be detected over the link.</string>
+    <string name="model_limits">Limits</string>
+    <plurals name="model_limits_value">
+        <item quantity="one">waypoint %1$d, airport %2$d, route %3$d byte</item>
+        <item quantity="other">waypoint %1$d, airport %2$d, route %3$d bytes</item>
+    </plurals>
+    <string name="model_why_two_title">Why only two models</string>
+    <string name="model_why_two_body">Each model\'s limits come from reading its own flight plan parser. A model that has not been read is left out rather than given another\'s numbers. A wrong limit fails the upload instead of trimming a name.</string>
+    <string name="model_wanted_gtn_xi">The GTN Xi is missing for that reason. If you have one and would let it be tested, open an issue at %1$s</string>
+
+    <!-- The protocol log. -->
+    <string name="log_title">Protocol log</string>
+    <string name="log_empty">Nothing yet.</string>
+    <string name="log_clip_label">SendFPL protocol log</string>
+
+    <!-- The credential sheet. -->
+    <string name="credential_title">Connext credential</string>
+    <string name="credential_body">A navigator will not take a flight plan from an unauthenticated client, and there is no way for an independent app to be issued a credential of its own. SendFPL carries the one Garmin\'s apps use. Nothing is asked of you, and it goes nowhere but the navigator.</string>
+    <string name="credential_replace_body">If Garmin changes it, uploads stop working until SendFPL is updated. Replace lets you supply your own in the meantime:</string>
+    <string name="credential_import">Import credential</string>
+    <string name="credential_replace">Replace credential</string>
+    <string name="credential_forget">Forget</string>
+    <string name="credential_stored_note">Stored encrypted, and kept out of backups. Forget clears it until the app next starts.</string>
+    <string name="credential_missing">no credential imported</string>
+    <string name="credential_invalid">invalid credential</string>
+
+    <!-- The About sheet. -->
+    <string name="about_version">SendFPL %1$s</string>
+    <string name="about_tagline">Sends flight plans from your phone to a panel navigator over Bluetooth.</string>
+    <string name="about_responsibility_title">Pilot responsibility</string>
+    <!--
+        The canonical safety wording, repeated verbatim in README.md, www/index.html and the SAFETY
+        section of the Play listing. Changing one means changing all four.
+    -->
+    <string name="about_responsibility_body">SendFPL is not certified avionics. The navigator holds an imported plan for preview. Check every waypoint there before you accept it. The pilot in command is responsible for the plan flown.</string>
+    <string name="about_trademark_title">Not affiliated with Garmin</string>
+    <string name="about_trademark_body">SendFPL is an independent project by %1$s, not affiliated with or endorsed by Garmin Ltd. Garmin, Connext, GTN, GNX and GNC are their trademarks, used here only to name the equipment this app talks to.</string>
+    <string name="about_privacy_title">Privacy</string>
+    <string name="about_privacy_body">SendFPL has no network permission, so nothing leaves your phone. It keeps the credential, and which navigators you have uploaded to and when. Both stay on the device, and uninstalling removes them.</string>
+    <string name="about_licence">Free and open source under the MIT licence, at %1$s.</string>
+    <string name="about_credential_body">SendFPL carries the credential it authenticates with. If Garmin ever changes it, you can supply your own here without waiting for an update.</string>
+    <string name="about_manage_credential">Manage credential</string>
+    <string name="about_feedback_title">Feedback</string>
+    <string name="about_feedback_body">Bugs, feature requests, and navigators that are missing go to the issue tracker.</string>
+
+    <!-- File handling. -->
+    <string name="file_unreadable">could not read that file</string>
+    <string name="file_unopenable">could not open the file</string>
+    <string name="file_too_big">that file is bigger than %1$s, which is far more than this needs. It is probably not the file you meant to pick</string>
+
+    <!--
+        Refusals a pilot is expected to act on, named by `Problem` in the :cxp module.
+
+        That module is a plain Kotlin library with no Android in it and therefore no resources, so
+        it names a refusal and carries its arguments and the wording lives here. Refusals that
+        describe a malformed file's internals are not in this list: they quote wire syntax, they
+        reach a pilot only when a planner wrote something wrong, and they keep their English at the
+        throw site.
+    -->
+    <string name="problem_route_too_short">A route needs at least a departure and an arrival, for example \"KSFO KLAS\".</string>
+    <string name="problem_not_a_position">\"%1$s\" is not a position.</string>
+    <string name="problem_ambiguous_latitude">\"%1$s\" is ambiguous: a latitude holds %2$d digits of degrees, so the decimal point could belong to the degrees or to the minutes. Write decimal degrees, %3$d digits for whole minutes, or %4$d digits for tenths of a minute.</string>
+    <string name="problem_ambiguous_longitude">\"%1$s\" is ambiguous: a longitude holds %2$d digits of degrees, so the decimal point could belong to the degrees or to the minutes. Write decimal degrees, %3$d digits for whole minutes, or %4$d digits for tenths of a minute.</string>
+    <string name="problem_unreadable_latitude">Cannot read the latitude \"%1$s\". Write decimal degrees, %3$d digits for whole minutes, or %4$d digits for tenths of a minute.</string>
+    <string name="problem_unreadable_longitude">Cannot read the longitude \"%1$s\". Write decimal degrees, %3$d digits for whole minutes, or %4$d digits for tenths of a minute.</string>
+    <string name="problem_two_hemispheres">\"%1$s\" has a hemisphere letter at both ends of one coordinate.</string>
+    <string name="problem_latitude_out_of_range">\"%1$s\" gives latitude %2$s, which is outside 90 degrees north to 90 degrees south.</string>
+    <string name="problem_longitude_out_of_range">\"%1$s\" gives longitude %2$s, which is outside 180 degrees east to 180 degrees west.</string>
+    <string name="problem_waypoint_name_too_long">The waypoint name \"%1$s\" is %2$d characters and this navigator reads %3$d. A longer name loses the point its position.</string>
+    <string name="problem_waypoint_name_not_alphanumeric">The waypoint name \"%1$s\" has to be letters and digits only.</string>
+    <string name="problem_departure_airport_too_long">The departure aerodrome \"%1$s\" is %2$d characters and the %3$s reads %4$d.</string>
+    <string name="problem_arrival_airport_too_long">The arrival aerodrome \"%1$s\" is %2$d characters and the %3$s reads %4$d.</string>
+    <string name="problem_waypoint_ident_too_long">The waypoint \"%1$s\" is %2$d characters and the %3$s reads %4$d. Shortening it would name a different place, so the route is not sent.</string>
+    <string name="problem_airway_ident_too_long">The airway \"%1$s\" is %2$d characters and the %3$s reads %4$d.</string>
+    <string name="problem_procedure_ident_too_long">The procedure \"%1$s\" is %2$d characters and the %3$s reads %4$d.</string>
+    <string name="problem_transition_ident_too_long">The transition \"%1$s\" is %2$d characters and the %3$s reads %4$d.</string>
+    <string name="problem_stated_ident_too_long">\"%1$s\" is %2$d characters and this navigator reads %3$d. The file gave it as an identifier, so shortening it would name a different waypoint.</string>
+    <string name="problem_route_too_long">This route is %1$d bytes and the %3$s rejects anything over %2$d. Send it in two legs.</string>
+    <string name="problem_unrecognised_file">This is not a route file this reads. It takes a Garmin .fpl or .gfp, a GPX, a KML, a SkyDemon .flightplan, or a flight simulator .pln.</string>
+    <string name="problem_not_xml">This file is not readable. A route has to be the file the planner exported, not a screenshot of it or a copy pasted into a document.</string>
+    <string name="problem_zip_not_route">This is a zip. A KMZ has to be unzipped to the KML inside it first.</string>
+    <string name="problem_waypoint_library">This is a SkyDemon waypoint library, not a route: a set of places with no order to fly them in. Open a route instead, or plan one through these points and export that.</string>
+    <string name="problem_too_few_points">This file holds fewer than two points, so there is no route in it.</string>
+    <string name="problem_all_points_same">Every point in this route is at the same place, so there is nothing to fly.</string>
+    <string name="problem_position_off_earth">This file gives a position at %1$s, %2$s, which is not on the earth.</string>
+    <string name="problem_position_not_a_number">This file gives a position that is not a number.</string>
+</resources>

@@ -1,0 +1,9 @@
+An identifier too long for the navigator to read is now refused as you type it,
+rather than reaching the panel as a route through a different place. Waypoints,
+airways, procedures and transitions are checked against the model's own limits,
+and a refusal says what is wrong.
+
+The application is now in French as well as English.
+
+The device list shows Garmin devices only, says how many it hid, and gives one
+tap back to all of them.

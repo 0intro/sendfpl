@@ -1,0 +1,1 @@
+Send a flight plan from your phone to a Garmin panel navigator over Bluetooth.

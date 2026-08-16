@@ -1,0 +1,55 @@
+SendFPL sends a flight plan from your phone to a panel navigator over Bluetooth, so a route you have already planned does not have to be entered on the unit one waypoint at a time.
+
+WHY IT EXISTS
+
+A panel navigator will accept a flight plan over Bluetooth, and the application you plan in will export one, but nothing connects the two unless both ends come from the same manufacturer. SendFPL is that connection. Interoperability is its only purpose.
+
+WHAT IT DOES
+
+- Type a route: LFPL CLM LFFZ LFQB. The first and last identifiers are the airports.
+- Open a route your planner exported. Six formats are read: Garmin .fpl, GPX, KML, the flight simulator .pln, SkyDemon's .flightplan, and .gfp.
+- User waypoints, and coordinates in several notations.
+- Pick the navigator model, and its own identifier and route length limits apply.
+- See the exact route string before it is sent, and its size.
+- Follow the protocol exchange packet by packet, on screen.
+
+A file arrives however is convenient: "Open with" from any file manager, a share from the application holding it, a mail attachment, or the folder icon in the route box. A route pasted or shared as plain text is accepted too.
+
+TESTED WITH
+
+SD-VFR, which exports the same navigation as .fpl, .gpx, .kml and .pln. All four import as the same route.
+
+SkyDemon, which sends .flightplan, GPX, .fpl and .gfp by mail.
+
+Anything else that writes one of those six formats will import as well.
+
+SUPPORTED NAVIGATORS
+
+GNC 355, GNX 375, GPS 175 and GTN 6xx/7xx. Each model's limits were read from that model's own flight plan parser, and a model that has not been read is left out rather than given another model's numbers. The first three are one firmware family under a single product id, and testing was done on a unit from it; the GTN is supported from its software rather than from a unit on a bench.
+
+NOTHING TO SET UP
+
+A navigator will not take a flight plan from an unauthenticated client, and SendFPL carries what it needs to authenticate. Install it, pair the navigator in Android's Bluetooth settings, and send.
+
+LANGUAGES
+
+English and French.
+
+PRIVACY
+
+No account, no analytics, and no network permission at all. Bluetooth is the only permission requested. The flight plan goes from your phone to the navigator and nowhere else. The source is public.
+
+REQUIREMENTS
+
+Android 8.0 or newer, and a navigator already paired in Android's Bluetooth settings. On the navigator, Flight Plan Import must be enabled under Bluetooth Settings > Features.
+
+SAFETY
+
+SendFPL is not certified avionics. The navigator holds an imported plan for preview. Check every waypoint there before you accept it. The pilot in command is responsible for the plan flown.
+
+SendFPL is free and open source under the MIT licence.
+
+Source: https://github.com/0intro/sendfpl
+Privacy policy: https://0intro.github.io/sendfpl/privacy.html
+
+Not affiliated with, endorsed by or sponsored by Garmin Ltd. or its subsidiaries. Garmin, GNC 355, GNX 375, GPS 175 and GTN are trademarks of Garmin Ltd. SkyDemon is a trademark of Divelements Limited. SD-VFR is a trademark of SkyDreamSoft. Product names appear only to state compatibility.

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The dark half of the launch theme.
+
+    This is the window the platform paints before Compose has drawn anything, so without it a
+    launch in dark mode flashed white and then went dark, while ui/Theme.kt had been honouring
+    isSystemInDarkTheme() all along. Only the manifest theme needs this: everything the app draws
+    is a Compose colour scheme, not an Android style.
+-->
+<resources>
+    <style name="Theme.SendFPL" parent="android:Theme.Material.NoActionBar" />
+</resources>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SendFPL</title>
+<meta name="description" content="Send a flight plan from your phone to a panel navigator over Bluetooth.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <svg viewBox="18 18 72 72" width="40" height="40" role="img" aria-label="SendFPL">
+    <rect x="18" y="18" width="72" height="72" rx="16" fill="#0b3d5c"/>
+    <path fill="#ffffff" d="M54,30 62,54 54,49 46,54Z"/>
+    <path stroke="#ffffff" stroke-width="2.5" fill="none" d="M54,52 V78"/>
+    <circle cx="54" cy="74" r="4" fill="#7fd1ff"/>
+  </svg>
+  <div class="name">SendFPL</div>
+</header>
+
+<h1>A flight plan, from your phone to the panel</h1>
+
+<p>SendFPL sends a flight plan from an Android phone straight to a navigator in the panel over
+Bluetooth, so you do not have to type it in on the unit. The navigator holds it for preview, and
+you open its catalog page and accept it.</p>
+
+<ul>
+  <li>Type a route, or open one your planner exported: Garmin <code>.fpl</code>, GPX, KML,
+      <code>.pln</code>, SkyDemon's <code>.flightplan</code> or a <code>.gfp</code>. Share it from
+      another app, or open it from any file manager.</li>
+  <li>User waypoints and coordinates.</li>
+  <li>Shows the exact route string before it goes.</li>
+  <li>English and French.</li>
+  <li>Works offline: no account, no network permission, nothing leaves your phone.</li>
+</ul>
+
+<h2>Supported navigators</h2>
+
+<p>GNC 355, GNX 375, GPS 175 and GTN 6xx/7xx. Each model's limits come from reading its own
+flight plan parser, and a model that has not been read is left out rather than given another's
+numbers. The first three are one firmware family under a single product id, and the bench testing
+was done on a unit from it. The GTN is supported from its software, not from a unit on a bench.</p>
+
+<h2>Open source</h2>
+
+<p>SendFPL is free and open source under the MIT licence, at
+<a href="https://github.com/0intro/sendfpl">github.com/0intro/sendfpl</a>.</p>
+
+<h2>Before you fly</h2>
+
+<p>SendFPL is not certified avionics. The navigator holds an imported plan for preview. Check
+every waypoint there before you accept it. The pilot in command is responsible for the plan
+flown.</p>
+
+<p class="small muted">SendFPL is an independent project by David du Colombier, not affiliated with
+or endorsed by Garmin Ltd. Garmin, Connext, GTN, GNX and GNC are their trademarks, used here only
+to name the equipment this app talks to.</p>
+
+<footer>
+  <p class="links"><a href="privacy.html">Privacy policy</a>
+     <a href="https://github.com/0intro/sendfpl">Source on GitHub</a>
+     <a href="https://github.com/0intro/sendfpl/issues">Report an issue</a></p>
+</footer>
+
+</body>
+</html>

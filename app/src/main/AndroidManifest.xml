@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- neverForLocation: we only connect to a device the user already paired, and never infer
+         position from it. -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation" />
+
+    <!-- The equivalents from before Android 12 split them. -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="true" />
+
+    <application
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SendFPL">
+
+        <!-- No android:label here: it would repeat the application's, which is what a launcher
+             and a share chooser already show. -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Accept a route shared as text from ForeFlight, notes, email … -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
+            <!-- And a route shared as a *file*, which is a different intent and was not accepted
+                 at all until now: the filter above matches text/plain and carries EXTRA_TEXT,
+                 while a shared attachment carries EXTRA_STREAM and its own type.
+
+                 This is the path that matters for SkyDemon, whose Android app has no general share
+                 chooser for a route: its Route menu offers "Send by Email", which produces a mail
+                 with the plan attached in four formats. Opening that mail and sharing the
+                 attachment is how the file reaches this app, and Gmail shares an attachment with
+                 ACTION_SEND rather than ACTION_VIEW.
+
+                 Only MIME types here. For ACTION_SEND the platform matches on the type alone and
+                 never looks at the EXTRA_STREAM URI, so a pathPattern would be dead weight. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/xml" />
+                <data android:mimeType="text/xml" />
+                <data android:mimeType="application/gpx+xml" />
+                <data android:mimeType="application/vnd.google-earth.kml+xml" />
+                <!-- The same trade as the VIEW filter below, for the same reason and at a slightly
+                     higher price: a share sheet is more prominent than "Open with". A mail app
+                     types an attachment from its extension, and Android's table has never heard of
+                     .fpl, .gpx, .pln, .flightplan or .gfp, so all of them arrive as octet-stream
+                     and nothing else distinguishes them. The bound is the same: this is what
+                     Android says when it does not recognise an extension, so a .pdf, .jpg or .zip
+                     is unaffected. -->
+                <data android:mimeType="application/octet-stream" />
+            </intent-filter>
+
+            <!-- Open a route: Garmin .fpl, GPX, KML, a flight simulator .pln, SkyDemon's own
+                 .flightplan, or a Garmin .gfp. Extensions are matched as well as MIME types
+                 because file providers are inconsistent about what they report for these, and
+                 three of the six have no registered type at all. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:mimeType="application/xml" />
+                <data android:mimeType="text/xml" />
+                <data android:mimeType="application/gpx+xml" />
+                <data android:mimeType="application/vnd.google-earth.kml+xml" />
+                <!-- The line that makes "Open with" work for the five formats Android cannot
+                     name, and the only one here that costs anything, so the measurement behind
+                     it is recorded.
+
+                     Files by Google hands a file to the chooser as its own provider's URI with
+                     no name in the path, `content://…nbu.files.provider/2/1000001024`, typed
+                     from Android's extension table. Of the six formats read here that table
+                     holds only .kml, so the other five arrive as application/octet-stream with
+                     nothing left to match on. Measured on a Redmi on Android 14: without this
+                     line the chooser for a flight plan offered a PDF viewer and a text viewer,
+                     and not this app.
+
+                     The cost is bounded, and was checked rather than assumed: octet-stream is
+                     what Android reports when it does not recognise an extension, so a .pdf,
+                     .jpg, .zip or .mp3 is unaffected, and only an unknown extension puts
+                     SendFPL in the list. Every other aviation application on the test handset
+                     already claims it, SD-VFR, which wrote the file, among them. -->
+                <data android:mimeType="application/octet-stream" />
+            </intent-filter>
+            <!-- Then by extension, twice over, because a filter that names no MIME type matches
+                 only an intent that carries none, and one that names any matches only an intent
+                 that carries one. Both forms are sent in practice and neither covers the other.
+
+                 These do not duplicate the octet-stream claim above; they cover what it cannot,
+                 and it covers what they cannot. That claim reaches a file whose provider offers
+                 a type but an opaque path, which is the Files by Google case and the reason it
+                 is there. The pair below reaches a file whose provider offers no type at all,
+                 and a file whose type is neither octet-stream nor one of the four named above,
+                 which is what happens when a provider derives a type from something other than
+                 the platform's extension table. Between the three filters, every combination
+                 observed on a handset resolves.
+
+                 pathPattern is a glob and not a regexp: ".*\\.fpl" is greedy and fails on a name
+                 holding more than one dot, which an exporter that stamps a date produces. Hence
+                 two patterns per extension, which is the usual way round it.
+
+                 It is also **case sensitive**, hence four per extension rather than two. That is
+                 not hypothetical: every SkyDemon route exported from the Windows planner in the
+                 sample set is named ".GPX", and a filter written only for ".gpx" matches none of
+                 them. SkyDemon's own waypoint library, "Name.userwaypoints.gpx", is why the two
+                 dot form is not optional either. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.fpl" />
+                <data android:pathPattern=".*\\..*\\.fpl" />
+                <data android:pathPattern=".*\\.FPL" />
+                <data android:pathPattern=".*\\..*\\.FPL" />
+                <data android:pathPattern=".*\\.gpx" />
+                <data android:pathPattern=".*\\..*\\.gpx" />
+                <data android:pathPattern=".*\\.GPX" />
+                <data android:pathPattern=".*\\..*\\.GPX" />
+                <data android:pathPattern=".*\\.kml" />
+                <data android:pathPattern=".*\\..*\\.kml" />
+                <data android:pathPattern=".*\\.KML" />
+                <data android:pathPattern=".*\\..*\\.KML" />
+                <data android:pathPattern=".*\\.pln" />
+                <data android:pathPattern=".*\\..*\\.pln" />
+                <data android:pathPattern=".*\\.PLN" />
+                <data android:pathPattern=".*\\..*\\.PLN" />
+                <data android:pathPattern=".*\\.flightplan" />
+                <data android:pathPattern=".*\\..*\\.flightplan" />
+                <data android:pathPattern=".*\\.FLIGHTPLAN" />
+                <data android:pathPattern=".*\\..*\\.FLIGHTPLAN" />
+                <data android:pathPattern=".*\\.gfp" />
+                <data android:pathPattern=".*\\..*\\.gfp" />
+                <data android:pathPattern=".*\\.GFP" />
+                <data android:pathPattern=".*\\..*\\.GFP" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.fpl" />
+                <data android:pathPattern=".*\\..*\\.fpl" />
+                <data android:pathPattern=".*\\.FPL" />
+                <data android:pathPattern=".*\\..*\\.FPL" />
+                <data android:pathPattern=".*\\.gpx" />
+                <data android:pathPattern=".*\\..*\\.gpx" />
+                <data android:pathPattern=".*\\.GPX" />
+                <data android:pathPattern=".*\\..*\\.GPX" />
+                <data android:pathPattern=".*\\.kml" />
+                <data android:pathPattern=".*\\..*\\.kml" />
+                <data android:pathPattern=".*\\.KML" />
+                <data android:pathPattern=".*\\..*\\.KML" />
+                <data android:pathPattern=".*\\.pln" />
+                <data android:pathPattern=".*\\..*\\.pln" />
+                <data android:pathPattern=".*\\.PLN" />
+                <data android:pathPattern=".*\\..*\\.PLN" />
+                <data android:pathPattern=".*\\.flightplan" />
+                <data android:pathPattern=".*\\..*\\.flightplan" />
+                <data android:pathPattern=".*\\.FLIGHTPLAN" />
+                <data android:pathPattern=".*\\..*\\.FLIGHTPLAN" />
+                <data android:pathPattern=".*\\.gfp" />
+                <data android:pathPattern=".*\\..*\\.gfp" />
+                <data android:pathPattern=".*\\.GFP" />
+                <data android:pathPattern=".*\\..*\\.GFP" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

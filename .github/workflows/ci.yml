@@ -1,0 +1,134 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# One run per ref at a time. This history is amended and force-pushed rather than appended to, so
+# without this the superseded run spends its six minutes reporting on a commit that no longer
+# exists, and lands a red X next to a green one for the same branch. The ref is part of the group
+# name so that a pull request cancels only its own previous run, never main and never another one.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      # A public repository turns "committed by reflex" into a disclosure that cannot be taken back.
+      - name: no secrets are tracked
+        run: |
+          # Keystores and the Connext credential, and also the Play service account key, which is
+          # a different kind of secret with the same consequence: it can upload to the store.
+          hits=$(git ls-files | grep -iE 'creds\.json|\.jks$|\.keystore$|keystore\.properties|local\.properties|\.p12$|\.pem$|service.?account|play.?credentials' || true)
+          test -z "$hits" || { echo "tracked files that look like secrets:"; echo "$hits"; exit 1; }
+      # The wrapper jar is a binary a pull request can quietly replace. This checks it against every
+      # wrapper checksum Gradle has published, so a version bump needs no edit here.
+      - uses: gradle/actions/wrapper-validation@v6
+
+  build:
+    needs: guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          # The default glob misses the version catalog, so a dependency bump would restore a
+          # stale cache under an unchanged key.
+          cache-dependency-path: |
+            gradle/libs.versions.toml
+            gradle/wrapper/gradle-wrapper.properties
+            settings.gradle.kts
+            build.gradle.kts
+            app/build.gradle.kts
+            cxp/build.gradle.kts
+
+      # Sign every CI build with one key, so a download installs over the last one instead of
+      # forcing an uninstall, which would take the credential stored on the handset with it. The
+      # test is in the script rather than in `if:` because the secrets context is not available to
+      # a step condition. Absent the secret, on a fork's pull request, AGP generates its own key
+      # and the build still works.
+      - name: stable debug signing key
+        env:
+          DEBUG_KEYSTORE_B64: ${{ secrets.DEBUG_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$DEBUG_KEYSTORE_B64" ]; then
+            mkdir -p local
+            printf '%s' "$DEBUG_KEYSTORE_B64" | base64 -d > local/debug.keystore
+            echo "signing with the stable debug key"
+          else
+            echo "no DEBUG_KEYSTORE_B64: AGP will generate an ephemeral debug key, and this build"
+            echo "will not install over any other"
+          fi
+
+      # There is no creds.json and no keystore.properties on this runner, and that is the point:
+      # this job is what keeps proving a fresh clone builds.
+      - run: ./gradlew :cxp:test
+      - run: ./gradlew :app:testDebugUnitTest
+      - run: ./gradlew :app:assembleDebug
+      - run: ./gradlew :app:lintDebug
+
+      # The store listing is tracked, so it is checked like anything else that is. Play reads its
+      # metadata only after it has read the credentials, so an over-long description otherwise
+      # fails a publish that has already authenticated.
+      - run: ./gradlew :app:verifyPlayListing
+
+      # The flag loosens the APK path only. The bundleRelease task, which is what Play takes, still
+      # refuses without a credential.
+      - run: ./gradlew :app:assembleRelease -Psendfpl.allowMissingCredential=true
+
+      # R8 is what makes this app small: material-icons-extended carries about two thousand icon
+      # builders for the seven that are drawn, and unminified the APK is 12.7 MB rather than 1.4.
+      # Nothing else notices if a dependency, or a stray isMinifyEnabled = false, undoes that, so
+      # the size is asserted rather than admired. The ceiling is generous on purpose: it is a
+      # tripwire for minification having stopped, not a budget to manage.
+      - name: the release apk is minified
+        run: |
+          # The name is found rather than written out, because it depends on something this runner
+          # does not have: with no keystore.properties the release variant is unsigned and AGP calls
+          # it app-release-unsigned.apk, where a machine holding the upload key gets app-release.apk.
+          # Naming one of them made this step fail on the missing file instead of measuring anything.
+          shopt -s nullglob
+          apks=(app/build/outputs/apk/release/*.apk)
+          test "${#apks[@]}" -eq 1 || {
+            echo "expected one release apk, found ${#apks[@]}: ${apks[*]}"; exit 1; }
+          bytes=$(stat -c%s "${apks[0]}")
+          echo "${apks[0]} is $((bytes / 1024)) kB"
+          test "$bytes" -lt 4194304 || {
+            echo "over the 4 MB ceiling, so R8 is probably not running"; exit 1; }
+
+      - name: the debug apk carries no credential
+        run: |
+          hits=$(unzip -l app/build/outputs/apk/debug/app-debug.apk | grep creds.json || true)
+          test -z "$hits" || { echo "debug APK carries a credential"; exit 1; }
+
+      # Installable, and upgradable over the previous one. It authenticates to nothing until you
+      # import a credential in the app.
+      - uses: actions/upload-artifact@v7
+        with:
+          name: sendfpl-debug-${{ github.sha }}
+          path: app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
+          if-no-files-found: error
+
+      - if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reports-${{ github.sha }}
+          path: |
+            app/build/reports/
+            cxp/build/reports/
+          retention-days: 30
+          if-no-files-found: ignore

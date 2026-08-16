@@ -1,0 +1,33 @@
+# Gradle and the IDE.
+.gradle/
+build/
+.kotlin/
+.idea/
+*.iml
+
+# The Android SDK path for this machine. With no file here AGP falls back to $ANDROID_HOME, which
+# is how CI and a fresh clone build.
+local.properties
+
+# Local working scratch. The build reads the Garmin credential from local/creds.json by default.
+/local/
+
+# Maintainer notes on releasing and the store listing. README.md is what this repository publishes.
+/docs/
+
+# Keystores and credentials. Both already live under the ignored local/, so what these patterns
+# catch is a copy dropped beside the build file by reflex, which in a public repository is a
+# disclosure rather than something to clean up.
+*.jks
+*.keystore
+keystore.properties
+creds.json
+*.creds.json
+credential*.json
+
+# Do NOT add *.jar. It would drop gradle/wrapper/gradle-wrapper.jar, after which every clone fails
+# with "Could not find or load main class org.gradle.wrapper.GradleWrapperMain".
+
+# Built artefacts carried out to the root. Under */build/ they are already ignored.
+*.apk
+*.aab

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Two of the three files this app writes must not follow a pilot to another device.
+
+    The credential is Garmin's, not ours to sync anywhere. The upload history is a list of the
+    Bluetooth addresses of navigators the pilot has flown with, which is theirs. Both are excluded
+    below.
+
+    `settings.xml` is the exception and is deliberately absent from both blocks: it holds display
+    preferences, no address and no key material, and carrying those to a new phone is a feature.
+
+    Both sections are needed, and this is easy to get wrong: android:allowBackup="false" in the
+    manifest stops the cloud backup, and on Android 12 and newer it does **not** stop a
+    device-to-device transfer. Only <device-transfer> does that. So a new preferences file that
+    does hold something private needs a line in both blocks below, or it silently moves to the
+    next phone.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="sharedpref" path="connext-credential.xml" />
+        <exclude domain="sharedpref" path="device_history.xml" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="sharedpref" path="connext-credential.xml" />
+        <exclude domain="sharedpref" path="device_history.xml" />
+    </device-transfer>
+</data-extraction-rules>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" version="1.1" creator="SkyDemon" xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="41.91667000" lon="8.74000000">
+    <name>Citadelle de Ajaccio</name>
+    <sym>GreenFlag</sym>
+    <extensions>
+      <identifier />
+      <category />
+    </extensions>
+  </wpt>
+  <wpt lat="42.60950000" lon="8.86178500">
+    <name>Château fort d'Algajola</name>
+    <sym>GreenFlag</sym>
+    <extensions>
+      <identifier />
+      <category />
+    </extensions>
+  </wpt>
+  <wpt lat="42.69135000" lon="9.45202200">
+    <name>Citadelle de Bastia</name>
+    <sym>GreenFlag</sym>
+    <extensions>
+      <identifier />
+      <category />
+    </extensions>
+  </wpt>
+</gpx>

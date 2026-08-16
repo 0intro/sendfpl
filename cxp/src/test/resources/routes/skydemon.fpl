@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flight-plan xmlns="http://www8.garmin.com/xmlschemas/FlightPlan/v1">
+  <created>2024-03-26T09:33:00Z</created>
+  <waypoint-table>
+    <waypoint>
+      <identifier>EDFC</identifier>
+      <type>AIRPORT</type>
+      <country-code>ED</country-code>
+      <lat>49.938862</lat>
+      <lon>9.062555</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier />
+      <type>INT</type>
+      <country-code>ED</country-code>
+      <lat>49.976944</lat>
+      <lon>9.052222</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier>MTR</identifier>
+      <type>VOR</type>
+      <country-code>ED</country-code>
+      <lat>50.276279</lat>
+      <lon>8.848625</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier />
+      <type>INT</type>
+      <country-code>ED</country-code>
+      <lat>50.635563</lat>
+      <lon>8.819371</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier />
+      <type>INT</type>
+      <country-code>ED</country-code>
+      <lat>50.824940</lat>
+      <lon>8.885000</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier />
+      <type>INT</type>
+      <country-code>ED</country-code>
+      <lat>51.047451</lat>
+      <lon>8.959086</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier />
+      <type>INT</type>
+      <country-code>ED</country-code>
+      <lat>51.110935</lat>
+      <lon>8.977226</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier />
+      <type>INT</type>
+      <country-code>ED</country-code>
+      <lat>51.314575</lat>
+      <lon>9.045895</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier>WRB</identifier>
+      <type>VOR</type>
+      <country-code>ED</country-code>
+      <lat>51.505695</lat>
+      <lon>9.110917</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier />
+      <type>INT</type>
+      <country-code>ED</country-code>
+      <lat>51.885605</lat>
+      <lon>9.193093</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier />
+      <type>INT</type>
+      <country-code>ED</country-code>
+      <lat>52.371666</lat>
+      <lon>9.090555</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier />
+      <type>INT</type>
+      <country-code>ED</country-code>
+      <lat>52.771992</lat>
+      <lon>8.788540</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier />
+      <type>INT</type>
+      <country-code>ED</country-code>
+      <lat>52.963593</lat>
+      <lon>8.787172</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier>EDDW</identifier>
+      <type>AIRPORT</type>
+      <country-code>ED</country-code>
+      <lat>53.047401</lat>
+      <lon>8.786750</lon>
+      <comment />
+    </waypoint>
+    <waypoint>
+      <identifier>EDWH</identifier>
+      <type>AIRPORT</type>
+      <country-code>ED</country-code>
+      <lat>53.069069</lat>
+      <lon>8.313486</lon>
+      <comment />
+    </waypoint>
+  </waypoint-table>
+  <route>
+    <route-name>EDFC EDDW</route-name>
+    <flight-plan-index>1</flight-plan-index>
+    <route-point>
+      <waypoint-identifier>EDFC</waypoint-identifier>
+      <waypoint-type>AIRPORT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier />
+      <waypoint-type>INT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier>MTR</waypoint-identifier>
+      <waypoint-type>VOR</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier />
+      <waypoint-type>INT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier />
+      <waypoint-type>INT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier />
+      <waypoint-type>INT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier />
+      <waypoint-type>INT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier />
+      <waypoint-type>INT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier>WRB</waypoint-identifier>
+      <waypoint-type>VOR</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier />
+      <waypoint-type>INT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier />
+      <waypoint-type>INT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier />
+      <waypoint-type>INT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier />
+      <waypoint-type>INT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier>EDDW</waypoint-identifier>
+      <waypoint-type>AIRPORT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+    <route-point>
+      <waypoint-identifier>EDWH</waypoint-identifier>
+      <waypoint-type>AIRPORT</waypoint-type>
+      <waypoint-country-code>ED</waypoint-country-code>
+    </route-point>
+  </route>
+</flight-plan>

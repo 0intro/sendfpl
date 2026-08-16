@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SendFPL privacy policy</title>
+<meta name="description" content="SendFPL collects nothing and sends nothing anywhere. The app has no network permission at all, so it cannot.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <svg viewBox="18 18 72 72" width="40" height="40" role="img" aria-label="SendFPL">
+    <rect x="18" y="18" width="72" height="72" rx="16" fill="#0b3d5c"/>
+    <path fill="#ffffff" d="M54,30 62,54 54,49 46,54Z"/>
+    <path stroke="#ffffff" stroke-width="2.5" fill="none" d="M54,52 V78"/>
+    <circle cx="54" cy="74" r="4" fill="#7fd1ff"/>
+  </svg>
+  <div class="name"><a href="./">SendFPL</a></div>
+</header>
+
+<h1>Privacy policy</h1>
+<p class="updated">This policy covers the SendFPL Android application, package
+<code>app.sendfpl</code>, published by David du Colombier.</p>
+
+<p>SendFPL collects nothing and sends nothing anywhere. The app has no network permission at all,
+so it cannot.</p>
+
+<h2>What it keeps, on your phone only</h2>
+<ul>
+  <li>The Connext credential it uses to authenticate to a navigator, stored encrypted and excluded
+      from backup.</li>
+  <li>The Bluetooth address of each navigator you have uploaded to, and when.</li>
+</ul>
+
+<p>The route itself is not in that list. It is held in memory while the app is open and is never
+written anywhere, so closing the app is enough to be rid of it.</p>
+
+<p>None of this leaves the device. There are no servers, no accounts and no analytics, so there is
+nothing to request or delete. Uninstalling the app removes everything it stored.</p>
+
+<h2>Bluetooth</h2>
+
+<p>SendFPL uses Bluetooth to reach a navigator you have already paired. The
+<code>BLUETOOTH_SCAN</code> permission is declared with <code>neverForLocation</code>: your
+position is never derived from it.</p>
+
+<p>The one thing that ever leaves your phone is the flight plan itself, when you press Send. It
+goes over Bluetooth to the navigator you picked, which is a device you own and have already
+paired. It is not sent to the developer, and there is nowhere else for it to go.</p>
+
+<h2>Questions</h2>
+
+<p>Questions about this policy, or about anything the app holds, go to David du Colombier,
+<a href="mailto:0intro@gmail.com">0intro@gmail.com</a>. Bugs and feature requests are better raised
+at <a href="https://github.com/0intro/sendfpl/issues">github.com/0intro/sendfpl/issues</a>.</p>
+
+<footer>
+  <p class="links"><a href="./">SendFPL</a>
+     <a href="https://github.com/0intro/sendfpl">Source on GitHub</a>
+     <a href="https://github.com/0intro/sendfpl/issues">Report an issue</a></p>
+</footer>
+
+</body>
+</html>
