@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:skd="http://www.skydemon.aero/gpxextensions" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" version="1.1" creator="SkyDemon Plan v3.4.2.26247" xmlns="http://www.topografix.com/GPX/1/1">
+  <rte>
+    <name>GRIMBERGEN / Lint - GRIMBERGEN / Lint</name>
+    <number>1</number>
+    <rtept lat="50.948610" lon="4.391944">
+      <ele>15.0000</ele>
+      <name>GRIMBERGEN / Lint</name>
+      <sym>EBGB</sym>
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.018330" lon="4.369167">
+      <ele>6.0000</ele>
+      <name>WP - Kapelle-op-den-Bos</name>
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.000560" lon="4.215278">
+      <ele>16.0000</ele>
+      <name>WP - Buggenhoutbos</name>
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.165080" lon="4.183944">
+      <ele>19.0000</ele>
+      <name>Nicky</name>
+      <sym>NIK</sym>
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.286110" lon="4.233056">
+      <ele>-1.0000</ele>
+      <name />
+      <sym>D</sym>
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.252780" lon="4.282222">
+      <ele>3.0000</ele>
+      <name>KALLO</name>
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.230830" lon="4.441111">
+      <ele>8.0000</ele>
+      <name>PORTA</name>
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.238060" lon="4.500556">
+      <ele>2.0000</ele>
+      <name>ALBER</name>
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.164640" lon="4.847681">
+      <ele>16.0000</ele>
+      <name />
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.118640" lon="4.598500">
+      <ele>7.0000</ele>
+      <name>WP - Liera</name>
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.067780" lon="4.388611">
+      <ele>5.0000</ele>
+      <name>WP - Willebroek</name>
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.000560" lon="4.215278">
+      <ele>16.0000</ele>
+      <name>WP - Buggenhoutbos</name>
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="50.990280" lon="4.298056">
+      <ele>18.0000</ele>
+      <name>LONDI</name>
+      <extensions>
+        <skd:level type="A" value="1300" />
+      </extensions>
+    </rtept>
+    <rtept lat="50.948610" lon="4.391944">
+      <ele>15.0000</ele>
+      <name>GRIMBERGEN / Lint</name>
+      <sym>EBGB</sym>
+      <extensions />
+    </rtept>
+  </rte>
+</gpx>
