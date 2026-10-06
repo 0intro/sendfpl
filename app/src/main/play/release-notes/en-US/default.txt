@@ -1,0 +1,5 @@
+A point from a file always goes out as a point. A waypoint named like an airway, such as A1 for the motorway, used to go out as an airway.
+
+Points and aerodromes from a file go out with the position it gives them, so a name two places share is not ambiguous. The route box shows the names and keeps the positions.
+
+A GTN locked user waypoints sent with a name. It now gets each as its position, and names it itself. The app identifies the navigator before building the route.

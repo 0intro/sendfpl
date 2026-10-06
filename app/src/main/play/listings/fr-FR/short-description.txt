@@ -1,0 +1,1 @@
+Envoyez un plan de vol vers un navigateur Garmin par Bluetooth.

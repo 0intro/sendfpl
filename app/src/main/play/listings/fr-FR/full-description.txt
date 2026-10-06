@@ -1,0 +1,57 @@
+SendFPL envoie un plan de vol depuis votre téléphone vers un navigateur de bord par Bluetooth, pour qu'une route déjà préparée n'ait pas à être saisie point par point sur l'appareil.
+
+POURQUOI
+
+Un navigateur de bord accepte un plan de vol par Bluetooth, et l'application dans laquelle vous préparez vos vols sait en exporter un, mais rien ne relie les deux à moins que les deux extrémités viennent du même constructeur. SendFPL est ce lien. L'interopérabilité est sa seule raison d'être.
+
+CE QU'IL FAIT
+
+- Saisissez une route : LFPL CLM LFFZ LFQB. Le premier et le dernier identifiants sont les aérodromes.
+- Les voies aériennes, écrites entre les points d'entrée et de sortie : LFLL MANAK UT183 TIRAV LFRB.
+- Ouvrez une route exportée par votre logiciel de préparation. Six formats sont lus : Garmin .fpl, GPX, KML, le .pln du simulateur, le .flightplan de SkyDemon et le .gfp.
+- Points de cheminement utilisateur et coordonnées en plusieurs notations.
+- Départs, arrivées et approches, depuis un .gfp qui les contient.
+- Le navigateur est reconnu lorsqu'il répond, et ses propres limites d'identifiants, de longueur de route et de nombre de points s'appliquent. Vous pouvez toujours choisir le modèle vous-même.
+- Voyez la chaîne de route exacte avant l'envoi, et sa taille.
+- Suivez l'échange du protocole paquet par paquet, à l'écran.
+
+Un fichier arrive comme il vous arrange : « Ouvrir avec » depuis n'importe quel gestionnaire de fichiers, un partage depuis l'application qui le détient, une pièce jointe, ou l'icône de dossier dans le champ de route. Une route collée ou partagée en texte simple est acceptée aussi.
+
+TESTÉ AVEC
+
+SD-VFR, qui exporte la même navigation en .fpl, .gpx, .kml et .pln. Les quatre donnent la même route.
+
+SkyDemon, qui envoie .flightplan, GPX, .fpl et .gfp par courriel.
+
+Tout autre logiciel écrivant l'un de ces six formats sera lu également.
+
+NAVIGATEURS PRIS EN CHARGE
+
+GNC 355, GNX 375, GPS 175 et GTN 6xx/7xx. Les limites de chaque modèle ont été lues dans l'analyseur de plan de vol de ce modèle, et un modèle qui n'a pas été lu est absent plutôt que doté des chiffres d'un autre. Les trois premiers forment une même famille sous un identifiant produit unique, et les essais ont été faits sur une unité de cette famille ; le GTN est pris en charge à partir de son logiciel et non d'une unité au banc. Un navigateur qui n'en fait pas partie est refusé plutôt que traité avec les limites d'un autre modèle, car une limite erronée ne raccourcit pas un nom : elle coûte le plan de vol entier.
+
+RIEN À CONFIGURER
+
+Un navigateur n'accepte pas de plan de vol d'un client non authentifié, et SendFPL porte ce qu'il faut pour s'authentifier. Installez-le, appairez le navigateur dans les réglages Bluetooth d'Android, et envoyez.
+
+LANGUES
+
+Français et anglais.
+
+CONFIDENTIALITÉ
+
+Aucun compte, aucune statistique, et aucune permission réseau. Le Bluetooth est la seule permission demandée. Le plan de vol va de votre téléphone au navigateur et nulle part ailleurs. Le code source est public.
+
+PRÉREQUIS
+
+Android 8.0 ou plus récent, et un navigateur déjà appairé dans les réglages Bluetooth d'Android. Sur le navigateur, l'import de plan de vol doit être activé sous Bluetooth Settings > Features.
+
+SÉCURITÉ
+
+SendFPL n'est pas un équipement de bord certifié. Le navigateur garde un plan importé en prévisualisation. Vérifiez-y chaque point avant de l'accepter. Le commandant de bord reste responsable du plan suivi.
+
+SendFPL est libre et gratuit, sous licence MIT.
+
+Source : https://github.com/0intro/sendfpl
+Politique de confidentialité : https://0intro.github.io/sendfpl/privacy.html
+
+Sans lien avec Garmin Ltd. ou ses filiales, ni approuvé ni parrainé par eux. Garmin, GNC 355, GNX 375, GPS 175 et GTN sont des marques de Garmin Ltd. SkyDemon est une marque de Divelements Limited. SD-VFR est une marque de SkyDreamSoft. Les noms de produits ne servent qu'à indiquer la compatibilité.

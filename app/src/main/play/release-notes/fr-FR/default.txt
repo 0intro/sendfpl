@@ -1,0 +1,5 @@
+Un point d'un fichier part toujours comme un point. Nommé comme une voie aérienne, tel A1 pour l'autoroute, il partait comme telle.
+
+Points et aérodromes d'un fichier partent avec leur position : un nom partagé par deux lieux n'est plus ambigu. La zone de route affiche les noms et garde les positions.
+
+Un GTN bloquait les points utilisateur envoyés avec un nom. Il les reçoit désormais par leur position et les nomme lui-même. L'application identifie le navigateur avant de construire la route.

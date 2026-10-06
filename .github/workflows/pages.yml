@@ -1,0 +1,45 @@
+# Publishes www/ at https://0intro.github.io/sendfpl/, which is where the privacy policy the store
+# listing points at is served from. The published surface is exactly www/, enforced by the `path:`
+# below rather than by a convention about where files sit.
+#
+# Setup, done once: Settings > Pages > Source must be "GitHub Actions", not "Deploy from a branch",
+# or actions/deploy-pages fails with "Pages site not found". Renaming this repository moves the
+# URL, which is written into the store listing.
+
+name: Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'www/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      # No build step and no Jekyll: the artifact is served exactly as it is committed, which is
+      # what makes "no external requests" something you can verify by reading www/.
+      - name: Upload www/
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: www
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

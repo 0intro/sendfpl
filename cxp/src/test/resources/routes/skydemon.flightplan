@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DivelementsFlightPlanner>
+<!-- Exported by SkyDemon. Trimmed to the route: the <Aircraft> profile and the
+     <WeightBalance> block are dropped, so this fixture carries no registration.
+     The route itself, including the <Alternate>, is exactly as SkyDemon wrote it. -->
+
+  <PrimaryRoute CourseType="GreatCircle" Start="N495619.90 E0090345.20" Level="6000" CruiseProfile="55 %" Rules="Vfr" PlannedFuel="79.000000">
+    <RhumbLineRoute To="N495837.00 E0090308.00" Level="MSL" LevelChange="B" />
+    <RhumbLineRoute To="N501634.60 E0085055.05" Level="MSL" LevelChange="B" />
+    <RhumbLineRoute To="N503808.00 E0084909.75" Level="FL60" LevelChange="B" />
+    <RhumbLineRoute To="N504929.80 E0085306.00" Level="FL60" LevelChange="B" />
+    <RhumbLineRoute To="N510250.80 E0085732.70" Level="FL60" LevelChange="B" />
+    <RhumbLineRoute To="N510639.35 E0085838.00" Level="FL60" LevelChange="B" />
+    <RhumbLineRoute To="N511852.50 E0090245.20" Level="FL60" LevelChange="B" />
+    <RhumbLineRoute To="N513020.50 E0090639.30" Level="FL60" LevelChange="B" />
+    <RhumbLineRoute To="N515308.20 E0091135.15" Level="FL60" LevelChange="B" />
+    <RhumbLineRoute To="N522218.00 E0090526.00" Level="FL60" LevelChange="B" />
+    <RhumbLineRoute To="N524619.20 E0084718.75" Level="FL50" LevelChange="B" />
+    <RhumbLineRoute To="N525748.95 E0084713.80" Level="FL40" LevelChange="B" />
+    <RhumbLineRoute To="N530250.65 E0084712.30" Level="FL40" LevelChange="B" />
+    <Alternate To="N530408.65 E0081848.55" Level="MSL" LevelChange="B" />
+    <ReferencedAirfields />
+  </PrimaryRoute>
+</DivelementsFlightPlanner>

@@ -1,0 +1,56 @@
+# Push the Play store listing, and nothing else.
+#
+# The listing is text and images under app/src/main/play, so it is reviewed as a diff and pushed
+# from here rather than typed into a web form. This workflow deliberately does not upload a
+# bundle: publishListing touches the store entry only and can never create or promote a release,
+# which makes it safe to run on a whim. Shipping a build is a separate, deliberate act.
+#
+# It needs one secret, PLAY_SERVICE_ACCOUNT_JSON, holding the whole service account key file. Make
+# one in Google Cloud, grant it access in Play Console under Users and permissions, and give it
+# no more than "Manage store presence" on this app.
+#
+# Getting that grant wrong fails in a way worth describing, because the error names the wrong
+# thing. Play authorises what an edit contains when the edit is committed, not when it is
+# uploaded, so an account holding only a release permission uploads the entire listing with a 200
+# for every call and then fails the last one with 403 "The caller does not have permission".
+# Where the refusal lands is the diagnostic: a 403 on creating the edit means nothing is granted
+# at all, and a 403 on the commit alone means this is the permission that is missing.
+#
+# Manual only. A listing that republishes itself on every push to main is a listing nobody reads
+# before it goes out.
+name: Publish listing
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@v5
+
+      # Fails on a listing Play would reject, before anything authenticates.
+      - run: ./gradlew :app:verifyPlayListing
+
+      - name: service account key
+        env:
+          KEY: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          test -n "$KEY" || { echo "PLAY_SERVICE_ACCOUNT_JSON is not set"; exit 1; }
+          printf '%s' "$KEY" > "$RUNNER_TEMP/play.json"
+
+      - run: ./gradlew :app:publishListing -Psendfpl.playCredentials="$RUNNER_TEMP/play.json"
+
+      - name: shred the key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/play.json"
