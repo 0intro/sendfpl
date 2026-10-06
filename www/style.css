@@ -1,0 +1,137 @@
+/*
+ * One stylesheet for the two pages under www/. No web fonts, no scripts, no external requests of
+ * any kind: these pages exist to say that the app talks to nothing.
+ *
+ * Navy and Sky are the app's own colours, from ui/Theme.kt and res/values/colors.xml.
+ */
+
+:root {
+  color-scheme: light dark;
+  --navy: #0b3d5c;
+  --sky: #7fd1ff;
+  --bg: #ffffff;
+  --fg: #1b1f23;
+  --muted: #55606a;
+  --rule: #e3e7eb;
+  --link: #0b3d5c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #10161b;
+    --fg: #e6edf3;
+    --muted: #9aa7b2;
+    --rule: #24303a;
+    --link: #7fd1ff;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+  max-width: 40rem;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+header svg {
+  flex: none;
+}
+
+header .name {
+  font-size: 1.35rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+header .name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 {
+  margin: 2rem 0 0.35rem;
+  font-size: 1.6rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  margin: 2rem 0 0.5rem;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+
+p,
+ul {
+  margin: 0.85rem 0;
+}
+
+ul {
+  padding-left: 1.25rem;
+}
+
+li {
+  margin: 0.4rem 0;
+}
+
+a {
+  color: var(--link);
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.updated,
+.muted {
+  color: var(--muted);
+}
+
+.updated {
+  margin-top: 0;
+  font-size: 0.9rem;
+}
+
+.small {
+  font-size: 0.9rem;
+}
+
+footer {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+footer a {
+  white-space: nowrap;
+}
+
+/*
+ * The footer links, spaced rather than punctuated. They used to be separated by a middle dot
+ * written into the markup, which put a character between them that a screen reader announces and
+ * that has to be typed correctly in two files. A flex gap does the same job in the stylesheet,
+ * and wrapping means a narrow screen stacks them instead of running them off the edge.
+ */
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+}

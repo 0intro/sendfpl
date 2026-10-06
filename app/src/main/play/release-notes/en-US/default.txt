@@ -1,0 +1,7 @@
+Supports the GTN Xi. After a send, the app says what your navigator shows next, GTNs included, and the device list says how to pair one.
+
+Your navigator stays selected until you unpair it, and the app says when another one answers.
+
+Recovers from a lost or repeated packet as Garmin's app does, and stops at once when the link drops or you cancel.
+
+A route the navigator would misread is refused with the reason. A point just short of a whole degree is no longer placed 100 m off.

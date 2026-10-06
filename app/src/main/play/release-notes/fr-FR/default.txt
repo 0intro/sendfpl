@@ -1,0 +1,7 @@
+GTN Xi pris en charge. Après l'envoi, l'application dit ce qu'affiche le navigateur, GTN compris, et la liste des appareils guide l'association.
+
+Votre navigateur reste choisi jusqu'à sa dissociation ; l'application signale qu'un autre répond.
+
+Se remet d'un paquet perdu ou répété comme l'application Garmin, et s'arrête net si la liaison tombe ou si vous annulez.
+
+Une route que le navigateur lirait mal est refusée avec la raison. Un point juste avant un degré entier n'est plus décalé de 100 m.

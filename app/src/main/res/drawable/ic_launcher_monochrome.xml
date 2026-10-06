@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The themed icon layer, which Android 13 and newer tint to match the wallpaper.
+
+    The same geometry as ic_launcher_foreground, flattened to one colour: the system reads the
+    alpha channel and supplies its own tint, so the blue dot that reads as a position fix in the
+    full icon would come out identical to the arrow and merge into it. Drawn as an outline instead,
+    which survives being tinted.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M54,30 L62,54 L54,49 L46,54 Z" />
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2.5"
+        android:pathData="M54,52 L54,78" />
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2.5" android:fillColor="#00000000"
+        android:pathData="M54,74 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0" />
+</vector>

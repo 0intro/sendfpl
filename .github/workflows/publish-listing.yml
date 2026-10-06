@@ -1,0 +1,51 @@
+# Push the Play store listing under app/src/main/play, and nothing else: publishListing never
+# creates or promotes a release, so shipping a build stays a separate act. Manual only, so the
+# listing is read before it goes out.
+#
+# It needs one secret, PLAY_SERVICE_ACCOUNT_JSON, holding the whole service account key file:
+# made in Google Cloud, granted in Play Console under Users and permissions, with no more than
+# "Manage store presence" on this app.
+#
+# Play checks permissions when an edit is committed, not when it is uploaded. A 403 on creating
+# the edit means the account holds nothing; a 403 on the commit alone, after a 200 for every
+# upload, means "Manage store presence" is the permission missing.
+name: Publish listing
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-listing
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      # Fails on a listing Play would reject, before anything authenticates.
+      - run: ./gradlew :app:verifyPlayListing
+
+      - name: service account key
+        env:
+          KEY: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          test -n "$KEY" || { echo "PLAY_SERVICE_ACCOUNT_JSON is not set"; exit 1; }
+          printf '%s' "$KEY" > "$RUNNER_TEMP/play.json"
+
+      - run: ./gradlew :app:publishListing -Psendfpl.playCredentials="$RUNNER_TEMP/play.json"
+
+      - name: shred the key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/play.json"

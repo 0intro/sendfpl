@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.1" creator="SkyDreamSoft" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Châteaux de Picardie</name>
+  </metadata>
+  <wpt lat="48.821944" lon="2.622778">
+    <ele>457.2</ele>
+    <magvar>2.14</magvar>
+    <name>LFPL LOGNES EMERAINVILLE</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="48.791600627042" lon="2.8691714914193">
+    <ele>609.6</ele>
+    <magvar>2.21</magvar>
+    <name>L'obélisque</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="48.844631" lon="3.013858">
+    <ele>457.2</ele>
+    <magvar>2.25</magvar>
+    <name>CLM COULOMMIERS</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="48.991072506863" lon="2.9835746560586">
+    <ele>457.2</ele>
+    <magvar>2.23</magvar>
+    <name>Carrières</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.140066594058" lon="2.791523068147">
+    <ele>457.2</ele>
+    <magvar>2.18</magvar>
+    <name>Silos</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.15" lon="2.6863888888889">
+    <ele>457.2</ele>
+    <magvar>2.15</magvar>
+    <name>Abbaye de Chaalis</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.133065140992" lon="2.5740473150602">
+    <ele>457.2</ele>
+    <magvar>2.12</magvar>
+    <name>Parc Astérix</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.147222222222" lon="2.3813888888889">
+    <ele>457.2</ele>
+    <magvar>2.06</magvar>
+    <name>Abbaye de Royaumont</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.194444444444" lon="2.4872222222222">
+    <ele>457.2</ele>
+    <magvar>2.09</magvar>
+    <name>Château de Chantilly</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.225202313558" lon="2.5847668372562">
+    <ele>457.2</ele>
+    <magvar>2.12</magvar>
+    <name>Senlis</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.526111111111" lon="2.5708333333333">
+    <ele>457.2</ele>
+    <magvar>2.1</magvar>
+    <name>Abbaye de Saint Martin aux Bois</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.535" lon="2.9744444444444">
+    <ele>457.2</ele>
+    <magvar>2.22</magvar>
+    <name>Abbaye d'Ourscamp</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.433611" lon="2.804722">
+    <ele>457.2</ele>
+    <magvar>2.17</magvar>
+    <name>LFAD COMPIEGNE MARGNY</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.419444444444" lon="2.8313888888889">
+    <ele>457.2</ele>
+    <magvar>2.18</magvar>
+    <name>Palais Impérial de Compiègne</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.346670803053" lon="2.9803658810919">
+    <ele>762</ele>
+    <magvar>2.22</magvar>
+    <name>Château de Pierrefonds</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.345" lon="3.283056">
+    <ele>762</ele>
+    <magvar>2.31</magvar>
+    <name>LFJS SOISSONS COURMELLES</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.334166666667" lon="3.3594444444444">
+    <ele>762</ele>
+    <magvar>2.33</magvar>
+    <name>Donjon de Septmonts</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.222222222222" lon="3.5319444444444">
+    <ele>762</ele>
+    <magvar>2.38</magvar>
+    <name>Château de Fère en Tardenois</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.204166666667" lon="3.5691666666667">
+    <ele>762</ele>
+    <magvar>2.39</magvar>
+    <name>Château de Nesle</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="49.261666666667" lon="2.9997222222222">
+    <ele>762</ele>
+    <magvar>2.23</magvar>
+    <name>Donjon de Vez</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="48.844631" lon="3.013858">
+    <ele>365.76</ele>
+    <magvar>2.25</magvar>
+    <name>CLM COULOMMIERS</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <wpt lat="48.821944" lon="2.622778">
+    <ele>0</ele>
+    <magvar>2.14</magvar>
+    <name>LFPL LOGNES EMERAINVILLE</name>
+    <cmt></cmt>
+    <extensions>
+      <cross/>
+      <notes/>
+    </extensions>
+  </wpt>
+  <rte>
+    <rtept lat="48.821944" lon="2.622778">
+      <ele>457.2</ele>
+      <magvar>2.14</magvar>
+      <name>LFPL LOGNES EMERAINVILLE</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="48.791600627042" lon="2.8691714914193">
+      <ele>609.6</ele>
+      <magvar>2.21</magvar>
+      <name>L'obélisque</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="48.844631" lon="3.013858">
+      <ele>457.2</ele>
+      <magvar>2.25</magvar>
+      <name>CLM COULOMMIERS</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="48.991072506863" lon="2.9835746560586">
+      <ele>457.2</ele>
+      <magvar>2.23</magvar>
+      <name>Carrières</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.140066594058" lon="2.791523068147">
+      <ele>457.2</ele>
+      <magvar>2.18</magvar>
+      <name>Silos</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.15" lon="2.6863888888889">
+      <ele>457.2</ele>
+      <magvar>2.15</magvar>
+      <name>Abbaye de Chaalis</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.133065140992" lon="2.5740473150602">
+      <ele>457.2</ele>
+      <magvar>2.12</magvar>
+      <name>Parc Astérix</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.147222222222" lon="2.3813888888889">
+      <ele>457.2</ele>
+      <magvar>2.06</magvar>
+      <name>Abbaye de Royaumont</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.194444444444" lon="2.4872222222222">
+      <ele>457.2</ele>
+      <magvar>2.09</magvar>
+      <name>Château de Chantilly</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.225202313558" lon="2.5847668372562">
+      <ele>457.2</ele>
+      <magvar>2.12</magvar>
+      <name>Senlis</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.526111111111" lon="2.5708333333333">
+      <ele>457.2</ele>
+      <magvar>2.1</magvar>
+      <name>Abbaye de Saint Martin aux Bois</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.535" lon="2.9744444444444">
+      <ele>457.2</ele>
+      <magvar>2.22</magvar>
+      <name>Abbaye d'Ourscamp</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.433611" lon="2.804722">
+      <ele>457.2</ele>
+      <magvar>2.17</magvar>
+      <name>LFAD COMPIEGNE MARGNY</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.419444444444" lon="2.8313888888889">
+      <ele>457.2</ele>
+      <magvar>2.18</magvar>
+      <name>Palais Impérial de Compiègne</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.346670803053" lon="2.9803658810919">
+      <ele>762</ele>
+      <magvar>2.22</magvar>
+      <name>Château de Pierrefonds</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.345" lon="3.283056">
+      <ele>762</ele>
+      <magvar>2.31</magvar>
+      <name>LFJS SOISSONS COURMELLES</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.334166666667" lon="3.3594444444444">
+      <ele>762</ele>
+      <magvar>2.33</magvar>
+      <name>Donjon de Septmonts</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.222222222222" lon="3.5319444444444">
+      <ele>762</ele>
+      <magvar>2.38</magvar>
+      <name>Château de Fère en Tardenois</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.204166666667" lon="3.5691666666667">
+      <ele>762</ele>
+      <magvar>2.39</magvar>
+      <name>Château de Nesle</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="49.261666666667" lon="2.9997222222222">
+      <ele>762</ele>
+      <magvar>2.23</magvar>
+      <name>Donjon de Vez</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="48.844631" lon="3.013858">
+      <ele>365.76</ele>
+      <magvar>2.25</magvar>
+      <name>CLM COULOMMIERS</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+    <rtept lat="48.821944" lon="2.622778">
+      <ele>0</ele>
+      <magvar>2.14</magvar>
+      <name>LFPL LOGNES EMERAINVILLE</name>
+      <cmt></cmt>
+      <extensions>
+        <cross/>
+        <notes/>
+      </extensions>
+    </rtept>
+  </rte>
+</gpx>

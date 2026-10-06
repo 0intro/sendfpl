@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:skd="http://www.skydemon.aero/gpxextensions" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" version="1.1" creator="SkyDemon Plan v3.3.1.16385" xmlns="http://www.topografix.com/GPX/1/1">
+  <rte>
+    <name>Little Snoring - Badminton</name>
+    <number>1</number>
+    <rtept lat="52.859830" lon="0.908042">
+      <ele>59.0000</ele>
+      <name>Little Snoring</name>
+      <extensions>
+        <skd:level type="A" value="3000" />
+      </extensions>
+    </rtept>
+    <rtept lat="52.751720" lon="0.395160">
+      <ele>10.0000</ele>
+      <name>King's Lynn</name>
+      <extensions>
+        <skd:level type="A" value="3000" />
+      </extensions>
+    </rtept>
+    <rtept lat="52.468060" lon="-0.250833">
+      <ele>12.0000</ele>
+      <name>Peterborough Conington</name>
+      <sym>EGSF</sym>
+      <extensions>
+        <skd:level type="A" value="3000" />
+      </extensions>
+    </rtept>
+    <rtept lat="52.192220" lon="-1.614444">
+      <ele>49.0000</ele>
+      <name>Wellesbourne Mountford</name>
+      <sym>EGBW</sym>
+      <extensions>
+        <skd:level type="A" value="3000" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.750000" lon="-2.200000">
+      <ele>169.0000</ele>
+      <name>Stroud</name>
+      <extensions>
+        <skd:level type="A" value="2000" />
+      </extensions>
+    </rtept>
+    <rtept lat="51.548580" lon="-2.302875">
+      <ele>155.0000</ele>
+      <name>Badminton</name>
+      <extensions />
+    </rtept>
+  </rte>
+</gpx>

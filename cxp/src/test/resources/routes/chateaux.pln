@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SimBase.Document Type="AceXML" version="1,0">
+    <Descr>AceXML Document</Descr>
+    <FlightPlan.FlightPlan>
+        <Title>ChateauxdePicardie</Title>
+        <FPType>VFR</FPType>
+        <CruisingAlt>2500</CruisingAlt>
+        <DepartureID>LFPL</DepartureID>
+        <DepartureLLA>N48° 49' 19.00",E002° 37' 22.00",+001500.00</DepartureLLA>
+        <DestinationID>LFPL</DestinationID>
+        <DestinationLLA>N48° 49' 19.00",E002° 37' 22.00",+000000.00</DestinationLLA>
+        <Descr>LFPL, LFPL</Descr>
+        <DeparturePosition></DeparturePosition>
+        <DepartureName>LOGNES EMERAINVILLE</DepartureName>
+        <DestinationName>LOGNES EMERAINVILLE</DestinationName>
+        <AppVersion>
+            <AppVersionMajor>10</AppVersionMajor>
+            <AppVersionBuild>61637</AppVersionBuild>
+        </AppVersion>
+        <ATCWaypoint id="LFPL">
+            <ATCWaypointType>Airport</ATCWaypointType>
+            <WorldPosition>N48° 49' 19.00",E002° 37' 22.00",+001500.00</WorldPosition>
+            <ICAO>
+                <ICAOIdent>LFPL</ICAOIdent>
+            </ICAO>
+        </ATCWaypoint>
+		        <ATCWaypoint id="LFPLLOGNES">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N48° 49' 19.00",E002° 37' 22.00",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="LOBELISQUE">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N48° 47' 29.76",E002° 52' 9.02",+002000.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="CLMCOULOMM">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N48° 50' 40.67",E003° 0' 49.89",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="CARRIERES">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N48° 59' 27.86",E002° 59' 0.87",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="SILOS">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 8' 24.24",E002° 47' 29.48",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="ABBAYEDECH">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 8' 60.00",E002° 41' 11.00",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="PARCASTERI">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 7' 59.03",E002° 34' 26.57",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="ABBAYEDERO">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 8' 50.00",E002° 22' 53.00",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="CHATEAUDEC">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 11' 40.00",E002° 29' 14.00",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="SENLIS">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 13' 30.73",E002° 35' 5.16",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="ABBAYEDESA">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 31' 34.00",E002° 34' 15.00",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="ABBAYEDOUR">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 32' 6.00",E002° 58' 28.00",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="LFADCOMPIE">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 26' 1.00",E002° 48' 17.00",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="PALAISIMPE">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 25' 10.00",E002° 49' 53.00",+001500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="CHATEAUDEP">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 20' 48.01",E002° 58' 49.32",+002500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="LFJSSOISSO">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 20' 42.00",E003° 16' 59.00",+002500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="DONJONDESE">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 20' 3.00",E003° 21' 34.00",+002500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="CHATEAUDEF">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 13' 20.00",E003° 31' 55.00",+002500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="CHATEAUDEN">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 12' 15.00",E003° 34' 9.00",+002500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="DONJONDEVE">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N49° 15' 42.00",E002° 59' 59.00",+002500.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="CLMCOULOMM">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N48° 50' 40.67",E003° 0' 49.89",+001200.00</WorldPosition>
+        </ATCWaypoint>
+		        <ATCWaypoint id="LFPLLOGNES">
+            <ATCWaypointType>User</ATCWaypointType>
+            <WorldPosition>N48° 49' 19.00",E002° 37' 22.00",+000000.00</WorldPosition>
+        </ATCWaypoint>
+
+        <ATCWaypoint id="LFPL">
+            <ATCWaypointType>Airport</ATCWaypointType>
+            <WorldPosition>N48° 49' 19.00",E002° 37' 22.00",+000000.00</WorldPosition>
+            <ICAO>
+                <ICAOIdent>LFPL</ICAOIdent>
+            </ICAO>
+        </ATCWaypoint>
+    </FlightPlan.FlightPlan>
+</SimBase.Document>
