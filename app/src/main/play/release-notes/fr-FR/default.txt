@@ -1,0 +1,5 @@
+SendFPL partage désormais ses écrans, sa lecture des routes et son envoi avec une version iPhone et iPad. Chaque route d'exemple se lit et s'envoie comme en 0.2.3, vérifié sur les simulateurs Garmin GPS 175, GTN et GTN Xi.
+
+Chaque attente d'un envoi prend fin à son échéance, même si le navigateur continue d'émettre.
+
+Une route dans un encodage inconnu de SendFPL est refusée avec le nom de cet encodage et le conseil de l'enregistrer en UTF-8.

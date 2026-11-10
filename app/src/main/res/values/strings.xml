@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The launcher's label, which Android reads from here. The strings the screens show are Compose
+    resources, in ui/src/commonMain/composeResources.
+-->
+<resources>
+    <string name="app_name" translatable="false">SendFPL</string>
+</resources>

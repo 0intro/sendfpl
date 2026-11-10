@@ -20,6 +20,8 @@
     <!-- What a screen reader says for the arrow that closes the About page. -->
     <string name="action_back">Back</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_retry">Retry</string>
     <string name="action_copy">Copy</string>
     <string name="action_clear">Clear</string>
 
@@ -89,8 +91,56 @@
     <string name="device_chip_checking">%1$s (checking…)</string>
     <!-- Under the chip, which never changes by itself: tapping opens the device sheet. -->
     <string name="device_another_answers">Another navigator answers. Tap to choose.</string>
+    <string name="devices_title">Paired devices</string>
+    <!--
+        Shown while no navigator is listed. A navigator pairs only while its paired devices page
+        is open, which every model's pilot's guide says and a GPS 175 confirmed on the bench.
+    -->
+    <string name="devices_empty">No navigator is paired. On the navigator, open Home → System → Connext Setup and its paired devices page, which lets a phone pair. Then pair it in Android's Bluetooth settings and confirm on both screens.</string>
+    <string name="device_connext_badge">Connext</string>
+    <!--
+        What the Garmin filter did, and how to undo it. Always shown when it hid something, so the
+        hiding is never silent: see app/src/main/kotlin/app/sendfpl/bt/DeviceStatus.kt for why that
+        is what makes it defensible.
+    -->
+    <plurals name="devices_hidden">
+        <item quantity="one">%1$d other device hidden.</item>
+        <item quantity="other">%1$d other devices hidden.</item>
+    </plurals>
+    <string name="devices_showing_all">Showing every paired device.</string>
+    <string name="devices_show_all">Show all</string>
+    <string name="devices_show_garmin_only">Garmin only</string>
+    <string name="device_address_with_state">%1$s (%2$s)</string>
+
+    <string name="device_label_checking">checking…</string>
+    <string name="device_label_connected">connected</string>
+    <string name="device_label_no_answer">no answer, %1$s</string>
+    <string name="device_label_answered">answered %1$s</string>
+
+    <string name="device_detail_no_connext">No Connext service. Probably not a navigator.</string>
+    <string name="device_detail_link_held">Another app may be holding the link</string>
+    <string name="device_detail_unreachable">Powered off or out of range. You can still try.</string>
 
     <string name="device_icon_answered">answered</string>
+    <string name="device_icon_no_answer">no answer</string>
+
+    <string name="age_just_now">just now</string>
+    <plurals name="age_seconds">
+        <item quantity="one">%1$d s ago</item>
+        <item quantity="other">%1$d s ago</item>
+    </plurals>
+    <plurals name="age_minutes">
+        <item quantity="one">%1$d min ago</item>
+        <item quantity="other">%1$d min ago</item>
+    </plurals>
+    <plurals name="age_hours">
+        <item quantity="one">%1$d h ago</item>
+        <item quantity="other">%1$d h ago</item>
+    </plurals>
+
+    <string name="device_last_used_today">Last used today</string>
+    <string name="device_last_used_yesterday">Last used yesterday</string>
+    <string name="device_last_used_on">Last used %1$s</string>
 
     <!-- What the navigator told us about itself. -->
     <string name="session_title">Last session</string>

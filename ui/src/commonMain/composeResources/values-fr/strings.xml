@@ -28,6 +28,8 @@
     <string name="action_about">À propos</string>
     <string name="action_back">Retour</string>
     <string name="action_cancel">Annuler</string>
+    <string name="action_refresh">Actualiser</string>
+    <string name="action_retry">Réessayer</string>
     <string name="action_copy">Copier</string>
     <string name="action_clear">Effacer</string>
 
@@ -89,8 +91,52 @@
     <string name="device_chip_no_answer">%1$s (sans réponse)</string>
     <string name="device_chip_checking">%1$s (vérification…)</string>
     <string name="device_another_answers">Un autre navigateur répond. Touchez pour choisir.</string>
+    <string name="devices_title">Appareils associés</string>
+    <string name="devices_empty">Aucun navigateur n'est associé. Sur le navigateur, ouvrez Home → System → Connext Setup puis sa page des appareils associés, qui permet à un téléphone de s'associer. Associez-le ensuite dans les paramètres Bluetooth d'Android et confirmez sur les deux écrans.</string>
+    <string name="device_connext_badge">Connext</string>
+    <!-- See the English file. -->
+    <plurals name="devices_hidden">
+        <item quantity="one">%1$d autre appareil masqué.</item>
+        <item quantity="many">%1$d autres appareils masqués.</item>
+        <item quantity="other">%1$d autres appareils masqués.</item>
+    </plurals>
+    <string name="devices_showing_all">Tous les appareils associés sont affichés.</string>
+    <string name="devices_show_all">Tout afficher</string>
+    <string name="devices_show_garmin_only">Garmin uniquement</string>
+    <string name="device_address_with_state">%1$s (%2$s)</string>
+
+    <string name="device_label_checking">vérification…</string>
+    <string name="device_label_connected">connecté</string>
+    <string name="device_label_no_answer">sans réponse, %1$s</string>
+    <string name="device_label_answered">a répondu %1$s</string>
+
+    <string name="device_detail_no_connext">Pas de service Connext. Ce n'est probablement pas un navigateur.</string>
+    <string name="device_detail_link_held">Une autre application occupe peut-être la liaison</string>
+    <string name="device_detail_unreachable">Hors tension ou hors de portée. Vous pouvez tout de même essayer.</string>
 
     <string name="device_icon_answered">a répondu</string>
+    <string name="device_icon_no_answer">sans réponse</string>
+
+    <string name="age_just_now">à l'instant</string>
+    <plurals name="age_seconds">
+        <item quantity="one">il y a %1$d s</item>
+        <item quantity="many">il y a %1$d s</item>
+        <item quantity="other">il y a %1$d s</item>
+    </plurals>
+    <plurals name="age_minutes">
+        <item quantity="one">il y a %1$d min</item>
+        <item quantity="many">il y a %1$d min</item>
+        <item quantity="other">il y a %1$d min</item>
+    </plurals>
+    <plurals name="age_hours">
+        <item quantity="one">il y a %1$d h</item>
+        <item quantity="many">il y a %1$d h</item>
+        <item quantity="other">il y a %1$d h</item>
+    </plurals>
+
+    <string name="device_last_used_today">Dernière utilisation aujourd'hui</string>
+    <string name="device_last_used_yesterday">Dernière utilisation hier</string>
+    <string name="device_last_used_on">Dernière utilisation le %1$s</string>
 
     <!-- What the navigator told us about itself. Field names are the protocol's and stay as they are. -->
     <string name="session_title">Dernière session</string>

@@ -1,0 +1,5 @@
+SendFPL now shares its screens, its route reading and its transfer with an iPhone and iPad version. Every sample route reads and sends as in 0.2.3, checked on Garmin's GPS 175, GTN and GTN Xi trainers.
+
+Every wait in a transfer ends at its deadline, even while the navigator keeps sending.
+
+A route file in an encoding beyond those SendFPL reads is refused with the encoding's name, and the advice to save it as UTF-8.

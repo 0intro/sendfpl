@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- neverForLocation: the app connects only to a device the user already paired, and never
+         infers a position from it. -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="s" />
+
+    <!-- What Android 12 replaced with the two above. -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="true" />
+
+    <application
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SendFPL">
+
+        <!-- No android:label: a launcher and a share chooser show the application's. -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- A route shared as text. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
+            <!-- A route shared as a file, which is how a SkyDemon plan arrives: its app sends a
+                 route only by mail, and a mail app shares the attachment with ACTION_SEND. The
+                 platform matches a SEND on its type alone, never on the stream's URI. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/xml" />
+                <data android:mimeType="text/xml" />
+                <data android:mimeType="application/gpx+xml" />
+                <data android:mimeType="application/vnd.google-earth.kml+xml" />
+                <!-- A mail app types an attachment from its extension, and Android's table knows
+                     none of .fpl, .gpx, .pln, .flightplan or .gfp. Octet-stream is what any
+                     unknown extension gets, so a .pdf or a .jpg is unaffected. -->
+                <data android:mimeType="application/octet-stream" />
+            </intent-filter>
+
+            <!-- Open a route: .fpl, .gpx, .kml, .pln, .flightplan or .gfp, matched by type and by
+                 extension, because providers disagree about what they report for these. Only a
+                 content: URI: a type with no scheme would admit file: as well, which the app has
+                 no permission to read. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:mimeType="application/xml" />
+                <data android:mimeType="text/xml" />
+                <data android:mimeType="application/gpx+xml" />
+                <data android:mimeType="application/vnd.google-earth.kml+xml" />
+                <!-- Files by Google hands over its own URI, with no name in the path, typed from
+                     Android's extension table, which knows only .kml of these six. Without this
+                     line "Open with" does not offer the app for the other five. -->
+                <data android:mimeType="application/octet-stream" />
+            </intent-filter>
+            <!-- By extension, twice: a filter naming no MIME type matches only an intent that
+                 carries none, and one naming any matches only an intent that carries one.
+                 pathPattern is a case-sensitive glob that fails on a second dot, hence four
+                 patterns per extension: SkyDemon's Windows planner names its exports ".GPX", and
+                 its waypoint library is "Name.userwaypoints.gpx". -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.fpl" />
+                <data android:pathPattern=".*\\..*\\.fpl" />
+                <data android:pathPattern=".*\\.FPL" />
+                <data android:pathPattern=".*\\..*\\.FPL" />
+                <data android:pathPattern=".*\\.gpx" />
+                <data android:pathPattern=".*\\..*\\.gpx" />
+                <data android:pathPattern=".*\\.GPX" />
+                <data android:pathPattern=".*\\..*\\.GPX" />
+                <data android:pathPattern=".*\\.kml" />
+                <data android:pathPattern=".*\\..*\\.kml" />
+                <data android:pathPattern=".*\\.KML" />
+                <data android:pathPattern=".*\\..*\\.KML" />
+                <data android:pathPattern=".*\\.pln" />
+                <data android:pathPattern=".*\\..*\\.pln" />
+                <data android:pathPattern=".*\\.PLN" />
+                <data android:pathPattern=".*\\..*\\.PLN" />
+                <data android:pathPattern=".*\\.flightplan" />
+                <data android:pathPattern=".*\\..*\\.flightplan" />
+                <data android:pathPattern=".*\\.FLIGHTPLAN" />
+                <data android:pathPattern=".*\\..*\\.FLIGHTPLAN" />
+                <data android:pathPattern=".*\\.gfp" />
+                <data android:pathPattern=".*\\..*\\.gfp" />
+                <data android:pathPattern=".*\\.GFP" />
+                <data android:pathPattern=".*\\..*\\.GFP" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:host="*" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.fpl" />
+                <data android:pathPattern=".*\\..*\\.fpl" />
+                <data android:pathPattern=".*\\.FPL" />
+                <data android:pathPattern=".*\\..*\\.FPL" />
+                <data android:pathPattern=".*\\.gpx" />
+                <data android:pathPattern=".*\\..*\\.gpx" />
+                <data android:pathPattern=".*\\.GPX" />
+                <data android:pathPattern=".*\\..*\\.GPX" />
+                <data android:pathPattern=".*\\.kml" />
+                <data android:pathPattern=".*\\..*\\.kml" />
+                <data android:pathPattern=".*\\.KML" />
+                <data android:pathPattern=".*\\..*\\.KML" />
+                <data android:pathPattern=".*\\.pln" />
+                <data android:pathPattern=".*\\..*\\.pln" />
+                <data android:pathPattern=".*\\.PLN" />
+                <data android:pathPattern=".*\\..*\\.PLN" />
+                <data android:pathPattern=".*\\.flightplan" />
+                <data android:pathPattern=".*\\..*\\.flightplan" />
+                <data android:pathPattern=".*\\.FLIGHTPLAN" />
+                <data android:pathPattern=".*\\..*\\.FLIGHTPLAN" />
+                <data android:pathPattern=".*\\.gfp" />
+                <data android:pathPattern=".*\\..*\\.gfp" />
+                <data android:pathPattern=".*\\.GFP" />
+                <data android:pathPattern=".*\\..*\\.GFP" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
