@@ -1,0 +1,240 @@
+# The signed iPhone and iPad app, by hand, uploaded to App Store Connect. It needs an Apple
+# Developer Program membership and the secrets below, and its first step names the ones missing
+# and stops:
+#
+#   APPLE_TEAM_ID                the team's ten-character id
+#   APPLE_CERTIFICATE_P12_B64    the Apple Distribution certificate with its key, base64
+#   APPLE_CERTIFICATE_PASSWORD   that file's password
+#   APPLE_APPSTORE_PROFILE_B64   the App Store Connect provisioning profile for app.sendfpl, base64
+#   ASC_KEY_ID, ASC_ISSUER_ID    the App Store Connect API key's ids
+#   ASC_KEY_P8_B64               the key itself, base64
+#   SENDFPL_CREDENTIAL_B64       the Garmin credential the app carries, base64
+#
+# All but the credential, a repository secret that CI reads too, are the release environment's,
+# which runs on main alone reach. Each secret reaches the one step that reads it, so the build,
+# whose Xcode phase runs Gradle and its plugins, sees the certificate in a keychain and the
+# credential in a file, and the App Store Connect key reaches only the upload.
+#
+# What follows the upload is done in App Store Connect, as the job's summary lists: for
+# TestFlight, the build goes to the internal testers, which skips App Review. For AltStore PAL,
+# the build is submitted for notarization review, whose notarized package an AltStore source then
+# lists.
+#
+# Each run numbers its build <versionCode>.<run number>, since App Store Connect takes a build
+# number once.
+
+name: iOS release
+
+on:
+  workflow_dispatch:
+    inputs:
+      destination:
+        description: where the signed app goes
+        type: choice
+        options: [testflight, altstore-pal]
+        default: testflight
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: macos-26
+    timeout-minutes: 60
+    environment: release
+    env:
+      DESTINATION: ${{ inputs.destination }}
+      XCODEGEN_VERSION: 2.46.0
+      XCODEGEN_SHA256: 4d9e34b62172d645eed6457cac13fc222569974098ef4ee9c3368bedf0196806
+    steps:
+      - name: secrets
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_CERTIFICATE_P12_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_APPSTORE_PROFILE_B64: ${{ secrets.APPLE_APPSTORE_PROFILE_B64 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8_B64: ${{ secrets.ASC_KEY_P8_B64 }}
+          SENDFPL_CREDENTIAL_B64: ${{ secrets.SENDFPL_CREDENTIAL_B64 }}
+        run: |
+          missing=
+          for v in APPLE_TEAM_ID APPLE_CERTIFICATE_P12_B64 APPLE_CERTIFICATE_PASSWORD \
+            APPLE_APPSTORE_PROFILE_B64 ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_P8_B64 SENDFPL_CREDENTIAL_B64; do
+            [ -n "${!v:-}" ] || missing="$missing $v"
+          done
+          if [ -n "$missing" ]; then
+            echo "ios-release: missing secrets:$missing. See the comment at the top of this workflow."
+            exit 1
+          fi
+
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Xcode
+        run: |
+          xcode=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -n 1)
+          sudo xcode-select -s "$xcode"
+          xcodebuild -version
+
+      # Kotlin/Native's compiler and its dependencies, under the key of ci.yml's ios job.
+      - uses: actions/cache@v6
+        with:
+          path: ~/.konan
+          key: konan-${{ runner.os }}-${{ hashFiles('gradle/libs.versions.toml') }}
+
+      - name: the Xcode project, from ios/project.yml
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/xcodegen.zip" \
+            "https://github.com/yonaskolb/XcodeGen/releases/download/$XCODEGEN_VERSION/xcodegen.zip"
+          echo "$XCODEGEN_SHA256  $RUNNER_TEMP/xcodegen.zip" | shasum -a 256 -c
+          unzip -q "$RUNNER_TEMP/xcodegen.zip" -d "$RUNNER_TEMP"
+          "$RUNNER_TEMP/xcodegen/bin/xcodegen" generate --spec ios/project.yml
+
+      # A keychain of this run's own, deleted with the certificate in it when the job ends. The
+      # profile goes in both directories Xcode has read profiles from, the second since Xcode 16.
+      - name: signing
+        env:
+          APPLE_CERTIFICATE_P12_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_APPSTORE_PROFILE_B64: ${{ secrets.APPLE_APPSTORE_PROFILE_B64 }}
+        run: |
+          keychain="$RUNNER_TEMP/signing.keychain-db"
+          security create-keychain -p '' "$keychain"
+          security set-keychain-settings -lut 3600 "$keychain"
+          security unlock-keychain -p '' "$keychain"
+          printf '%s' "$APPLE_CERTIFICATE_P12_B64" | base64 -d > "$RUNNER_TEMP/certificate.p12"
+          security import "$RUNNER_TEMP/certificate.p12" -P "$APPLE_CERTIFICATE_PASSWORD" \
+            -A -t cert -f pkcs12 -k "$keychain"
+          rm -f "$RUNNER_TEMP/certificate.p12"
+          security set-key-partition-list -S apple-tool:,apple: -s -k '' "$keychain" >/dev/null
+          security list-keychains -d user -s "$keychain"
+          expires=$(security find-certificate -c 'Apple Distribution' -p "$keychain" |
+            openssl x509 -noout -enddate | sed 's/^notAfter=//')
+          echo "CERTIFICATE_EXPIRES=$expires" >> "$GITHUB_ENV"
+          printf '%s' "$APPLE_APPSTORE_PROFILE_B64" | base64 -d > "$RUNNER_TEMP/sendfpl.mobileprovision"
+          security cms -D -i "$RUNNER_TEMP/sendfpl.mobileprovision" > "$RUNNER_TEMP/profile.plist"
+          uuid=$(plutil -extract UUID raw "$RUNNER_TEMP/profile.plist")
+          for dir in "$HOME/Library/MobileDevice/Provisioning Profiles" \
+            "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles"; do
+            mkdir -p "$dir"
+            cp "$RUNNER_TEMP/sendfpl.mobileprovision" "$dir/$uuid.mobileprovision"
+          done
+          echo "PROFILE_UUID=$uuid" >> "$GITHUB_ENV"
+          echo "PROFILE_NAME=$(plutil -extract Name raw "$RUNNER_TEMP/profile.plist")" >> "$GITHUB_ENV"
+
+      # The credential, in a file only the runner's user reads. GitHub masks the secret as it
+      # stores it, in base64, so the token and the entitlement are masked here once decoded.
+      - name: credential
+        env:
+          SENDFPL_CREDENTIAL_B64: ${{ secrets.SENDFPL_CREDENTIAL_B64 }}
+        run: |
+          test -n "$SENDFPL_CREDENTIAL_B64" || { echo "no SENDFPL_CREDENTIAL_B64 secret"; exit 1; }
+          (umask 077 && printf '%s' "$SENDFPL_CREDENTIAL_B64" | base64 -d > "$RUNNER_TEMP/creds.json")
+          jq -r '(.token, .entitlement) | strings' "$RUNNER_TEMP/creds.json" |
+            sed 's/^/::add-mask::/' || { echo "SENDFPL_CREDENTIAL_B64 holds no JSON credential"; exit 1; }
+
+      - name: archive and export
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          SENDFPL_BUILD_RUN: ${{ github.run_number }}
+        run: |
+          SENDFPL_CREDENTIAL=$RUNNER_TEMP/creds.json xcodebuild archive -project ios/SendFPL.xcodeproj \
+            -scheme SendFPL -configuration Release -destination 'generic/platform=iOS' \
+            -archivePath build/SendFPL.xcarchive DEVELOPMENT_TEAM="$APPLE_TEAM_ID" CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY='Apple Distribution' PROVISIONING_PROFILE_SPECIFIER="$PROFILE_NAME"
+          cat > "$RUNNER_TEMP/export.plist" <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>teamID</key><string>$APPLE_TEAM_ID</string>
+            <key>signingStyle</key><string>manual</string>
+            <key>provisioningProfiles</key>
+            <dict><key>app.sendfpl</key><string>$PROFILE_NAME</string></dict>
+          </dict>
+          </plist>
+          EOF
+          xcodebuild -exportArchive -archivePath build/SendFPL.xcarchive \
+            -exportOptionsPlist "$RUNNER_TEMP/export.plist" -exportPath build/export
+          ls -l build/export
+
+      # The signed app, checked before it leaves: its signature, the entitlements of a distribution
+      # profile, and the credential.
+      - name: the signed app
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          dir="$RUNNER_TEMP/signed"
+          rm -rf "$dir"
+          mkdir "$dir"
+          unzip -q build/export/SendFPL.ipa -d "$dir"
+          app="$dir/Payload/SendFPL.app"
+          codesign --verify --strict --deep --verbose=2 "$app"
+          codesign -d --entitlements - --xml "$app" > "$dir/entitlements.plist"
+          test "$(plutil -extract get-task-allow raw "$dir/entitlements.plist")" = false
+          test "$(plutil -extract application-identifier raw "$dir/entitlements.plist")" = "$APPLE_TEAM_ID.app.sendfpl"
+          cmp -s "$app/creds.json" "$RUNNER_TEMP/creds.json" || {
+            echo "the signed app carries no credential, or another one"; exit 1; }
+          security cms -D -i "$app/embedded.mobileprovision" > "$dir/profile.plist"
+          test "$(plutil -extract UUID raw "$dir/profile.plist")" = "$PROFILE_UUID"
+          plist() { /usr/libexec/PlistBuddy -c "Print :$1" "$app/Info.plist"; }
+          {
+            echo "VERSION=$(plist CFBundleShortVersionString)"
+            echo "BUILD=$(plist CFBundleVersion)"
+            echo "PROFILE_EXPIRES=$(plutil -extract ExpirationDate raw "$dir/profile.plist")"
+          } >> "$GITHUB_ENV"
+
+      # The checked archive, exported again with App Store Connect as its destination, so a failed
+      # upload fails the step. The API key authenticates the upload, and the profile download that
+      # -allowProvisioningUpdates permits.
+      - name: upload to App Store Connect
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8_B64: ${{ secrets.ASC_KEY_P8_B64 }}
+        run: |
+          key="$RUNNER_TEMP/AuthKey_$ASC_KEY_ID.p8"
+          (umask 077 && printf '%s' "$ASC_KEY_P8_B64" | base64 -d > "$key")
+          /usr/libexec/PlistBuddy -c 'Add :destination string upload' "$RUNNER_TEMP/export.plist"
+          xcodebuild -exportArchive -archivePath build/SendFPL.xcarchive \
+            -exportOptionsPlist "$RUNNER_TEMP/export.plist" -exportPath build/upload \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$key" -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID"
+
+      - name: what remains
+        run: |
+          {
+            echo "SendFPL $VERSION ($BUILD) is uploaded. Once App Store Connect has processed it:"
+            echo
+            case $DESTINATION in
+            testflight)
+              echo "- in TestFlight, add the build to the internal testers' group"
+              ;;
+            altstore-pal)
+              echo "- in App Store Connect, submit the build for notarization review"
+              echo "- once it passes, list the notarized package in the AltStore source"
+              ;;
+            esac
+            echo
+            echo "The profile expires $PROFILE_EXPIRES, and the certificate $CERTIFICATE_EXPIRES."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - if: always()
+        name: forget the signing material
+        run: |
+          security delete-keychain "$RUNNER_TEMP/signing.keychain-db" 2>/dev/null || true
+          rm -f "$RUNNER_TEMP/creds.json" "$RUNNER_TEMP/sendfpl.mobileprovision" \
+            "$RUNNER_TEMP/AuthKey_"*.p8
+          rm -f "$HOME/Library/MobileDevice/Provisioning Profiles/${PROFILE_UUID:-none}.mobileprovision" \
+            "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles/${PROFILE_UUID:-none}.mobileprovision"

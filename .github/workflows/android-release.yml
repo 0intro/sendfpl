@@ -1,0 +1,120 @@
+# The Android app for Play, by hand: built with the Garmin credential, signed with the upload key,
+# and sent to Play's internal track as a draft, which reaches the internal testers once it is
+# rolled out in Play Console. It needs the secrets below, and its first step names the ones
+# missing and stops:
+#
+#   ANDROID_UPLOAD_KEYSTORE_B64   the upload keystore, base64
+#   ANDROID_STORE_PASSWORD        its password
+#   ANDROID_KEY_ALIAS             the upload key's alias
+#   ANDROID_KEY_PASSWORD          that key's password
+#   PLAY_SERVICE_ACCOUNT_JSON     the service account key, allowed to release to testing tracks
+#   SENDFPL_CREDENTIAL_B64        the Garmin credential the app carries, base64
+#
+# All but the credential, a repository secret that CI reads too, are the release environment's,
+# which runs on main alone reach. Each value is a secret of its own, so that each is masked in the
+# log.
+#
+# Play takes a versionCode once, so the upload fails for the versionCode of a build Play holds:
+# raise sendfpl.versionCode in gradle.properties first.
+
+name: Android release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: release
+    steps:
+      - name: secrets
+        env:
+          ANDROID_UPLOAD_KEYSTORE_B64: ${{ secrets.ANDROID_UPLOAD_KEYSTORE_B64 }}
+          ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          SENDFPL_CREDENTIAL_B64: ${{ secrets.SENDFPL_CREDENTIAL_B64 }}
+        run: |
+          missing=
+          for v in ANDROID_UPLOAD_KEYSTORE_B64 ANDROID_STORE_PASSWORD ANDROID_KEY_ALIAS \
+            ANDROID_KEY_PASSWORD PLAY_SERVICE_ACCOUNT_JSON SENDFPL_CREDENTIAL_B64; do
+            [ -n "${!v:-}" ] || missing="$missing $v"
+          done
+          if [ -n "$missing" ]; then
+            echo "android-release: missing secrets:$missing. See the comment at the top of this workflow."
+            exit 1
+          fi
+
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      # The credential, in a file only the runner's user reads. GitHub masks the secret as it
+      # stores it, in base64, so the token and the entitlement are masked here once decoded.
+      - name: credential
+        env:
+          SENDFPL_CREDENTIAL_B64: ${{ secrets.SENDFPL_CREDENTIAL_B64 }}
+        run: |
+          test -n "$SENDFPL_CREDENTIAL_B64" || { echo "no SENDFPL_CREDENTIAL_B64 secret"; exit 1; }
+          (umask 077 && printf '%s' "$SENDFPL_CREDENTIAL_B64" | base64 -d > "$RUNNER_TEMP/creds.json")
+          jq -r '(.token, .entitlement) | strings' "$RUNNER_TEMP/creds.json" |
+            sed 's/^/::add-mask::/' || { echo "SENDFPL_CREDENTIAL_B64 holds no JSON credential"; exit 1; }
+
+      # The upload key, where the build reads it: keystore.properties at the root, whose storeFile
+      # may be an absolute path.
+      - name: signing
+        env:
+          ANDROID_UPLOAD_KEYSTORE_B64: ${{ secrets.ANDROID_UPLOAD_KEYSTORE_B64 }}
+          ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          umask 077
+          printf '%s' "$ANDROID_UPLOAD_KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/upload.jks"
+          printf '%s\n' "storeFile=$RUNNER_TEMP/upload.jks" "storePassword=$ANDROID_STORE_PASSWORD" \
+            "keyAlias=$ANDROID_KEY_ALIAS" "keyPassword=$ANDROID_KEY_PASSWORD" > keystore.properties
+
+      - name: service account key
+        env:
+          KEY: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: (umask 077 && printf '%s' "$KEY" > "$RUNNER_TEMP/play.json")
+
+      # Without the build cache, for the reason ci.yml's release job gives.
+      - run: |
+          ./gradlew --no-build-cache :app:bundleRelease \
+            -Psendfpl.credential="$RUNNER_TEMP/creds.json"
+
+      - name: the bundle carries the credential
+        run: |
+          aab=app/build/outputs/bundle/release/app-release.aab
+          unzip -p "$aab" base/assets/creds.json | cmp -s - "$RUNNER_TEMP/creds.json" || {
+            echo "$aab carries no credential, or another one"; exit 1; }
+
+      # The bundle just checked, which Gradle finds up to date, goes up with the release notes
+      # under app/src/main/play.
+      - run: |
+          ./gradlew --no-build-cache :app:publishBundle -Psendfpl.credential="$RUNNER_TEMP/creds.json" \
+            -Psendfpl.playCredentials="$RUNNER_TEMP/play.json"
+
+      - name: what remains
+        run: |
+          version=$(sed -n 's/^sendfpl\.versionName=//p' gradle.properties)
+          code=$(sed -n 's/^sendfpl\.versionCode=//p' gradle.properties)
+          echo "SendFPL $version ($code) is a draft on Play's internal track: roll it out to the internal testers in Play Console." \
+            >> "$GITHUB_STEP_SUMMARY"
+
+      - if: always()
+        name: forget the signing material
+        run: rm -f keystore.properties "$RUNNER_TEMP/upload.jks" "$RUNNER_TEMP/play.json" "$RUNNER_TEMP/creds.json"
