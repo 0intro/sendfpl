@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 /*
  * The screens the Android and iPhone apps share, in Compose Multiplatform, with their strings and
  * icons as Compose resources. What only a platform can do comes in as an expect declaration, in
- * androidMain, or as a callback from the app that hosts the screens.
+ * androidMain and iosMain, or as a callback from the app that hosts the screens.
  */
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -27,6 +27,14 @@ kotlin {
         }
         // The common tests run on the build machine's JVM, as testAndroidHostTest.
         withHostTestBuilder {}
+    }
+    // The framework the Xcode project in ios/ links, built by its
+    // embedAndSignAppleFrameworkForXcode phase. Static, so the app carries one binary.
+    listOf(iosArm64(), iosSimulatorArm64()).forEach {
+        it.binaries.framework {
+            baseName = "SendFPLUI"
+            isStatic = true
+        }
     }
 
     sourceSets {

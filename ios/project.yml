@@ -1,0 +1,94 @@
+# The iPhone and iPad app, as XcodeGen writes its Xcode project: `xcodegen generate` here, then
+# open SendFPL.xcodeproj. Everything but the entry point is Kotlin, in ../ui, built into the
+# SendFPLUI framework by the first build phase.
+name: SendFPL
+options:
+  bundleIdPrefix: app
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    # Signing is the release workflow's, from its secrets. Everything else builds unsigned.
+    CODE_SIGN_STYLE: Automatic
+targets:
+  SendFPL:
+    type: application
+    platform: iOS
+    sources:
+      - path: SendFPL
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.sendfpl
+        PRODUCT_NAME: SendFPL
+        INFOPLIST_FILE: SendFPL/Info.plist
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        FRAMEWORK_SEARCH_PATHS: $(inherited) $(SRCROOT)/../ui/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)
+        OTHER_LDFLAGS: $(inherited) -framework SendFPLUI
+        # The phases below read the Gradle tree and write into the app.
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
+    preBuildScripts:
+      - name: Build the shared Kotlin
+        basedOnDependencyAnalysis: false
+        script: |
+          cd "$SRCROOT/.." || exit 1
+          ./gradlew --console=plain :ui:embedAndSignAppleFrameworkForXcode
+    postBuildScripts:
+      - name: Set the version
+        basedOnDependencyAnalysis: false
+        # The processed Info.plist, so that Xcode runs this after the task that writes it.
+        inputFiles:
+          - $(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)
+        script: |
+          # One release for both apps, from the lines the Android build reads. The release
+          # workflow adds its run number to the build, since App Store Connect takes each once.
+          props="$SRCROOT/../gradle.properties"
+          name=$(sed -n 's/^sendfpl\.versionName=//p' "$props")
+          code=$(sed -n 's/^sendfpl\.versionCode=//p' "$props")${SENDFPL_BUILD_RUN:+.$SENDFPL_BUILD_RUN}
+          plist="$TARGET_BUILD_DIR/$INFOPLIST_PATH"
+          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $name" "$plist"
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $code" "$plist"
+      - name: Stage the credential
+        basedOnDependencyAnalysis: false
+        script: |
+          # The Garmin credential, which this repository never holds: local/creds.json, or the
+          # file SENDFPL_CREDENTIAL names. A release, and an archive, which runs as the install
+          # action, refuse to build without one, because an app that authenticates to nothing
+          # looks healthy.
+          src="${SENDFPL_CREDENTIAL:-$SRCROOT/../local/creds.json}"
+          dst="$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/creds.json"
+          rm -f "$dst"
+          if [ -f "$src" ]; then
+            cp "$src" "$dst"
+          elif [ "$ACTION" = install ] || [ "$CONFIGURATION" = Release ]; then
+            echo "error: no credential at $src: a release without one authenticates to nothing"
+            exit 1
+          fi
+  SendFPLUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    # The app runs on iOS 16. Its UI test hands it a link with XCUIApplication.open, from 16.4.
+    deploymentTarget: "16.4"
+    sources:
+      - path: SendFPLUITests
+      # The route file a pick returns, one of the route tests' own.
+      - path: ../cxp/src/commonTest/resources/routes/chateaux.fpl
+        buildPhase: resources
+    dependencies:
+      - target: SendFPL
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.sendfpl.uitests
+        TEST_TARGET_NAME: SendFPL
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  SendFPL:
+    build:
+      targets:
+        SendFPL: all
+        SendFPLUITests: [test]
+    test:
+      targets:
+        - SendFPLUITests

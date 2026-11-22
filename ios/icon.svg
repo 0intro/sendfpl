@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="18 18 72 72">
+  <!-- The launcher icon of the Android app, ic_launcher_foreground.xml on its background colour,
+       cropped to the 72 units of the 108 a launcher shows. -->
+  <rect x="18" y="18" width="72" height="72" fill="#0B3D5C"/>
+  <path fill="#FFFFFF" d="M54,30 L62,54 L54,49 L46,54 Z"/>
+  <path fill="none" stroke="#FFFFFF" stroke-width="2.5" d="M54,52 L54,78"/>
+  <path fill="#7FD1FF" d="M54,74 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0"/>
+</svg>

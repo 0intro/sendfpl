@@ -1,0 +1,4 @@
+# What `xcodegen generate` writes from project.yml, and what Xcode builds.
+SendFPL.xcodeproj/
+build/
+DerivedData/

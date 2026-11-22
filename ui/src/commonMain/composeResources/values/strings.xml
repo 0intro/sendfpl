@@ -97,6 +97,10 @@
         is open, which every model's pilot's guide says and a GPS 175 confirmed on the bench.
     -->
     <string name="devices_empty">No navigator is paired. On the navigator, open Home → System → Connext Setup and its paired devices page, which lets a phone pair. Then pair it in Android's Bluetooth settings and confirm on both screens.</string>
+    <!-- On an iPhone or an iPad, the navigators the External Accessory framework has connected. -->
+    <string name="devices_title_ios">Navigators</string>
+    <string name="devices_empty_ios">No navigator is connected. On the navigator, open Home → System → Connext Setup and its paired devices page, which lets a phone pair. Then tap Pair a navigator, or pair it in Settings → Bluetooth, and confirm on both screens.</string>
+    <string name="action_pair">Pair a navigator</string>
     <string name="device_connext_badge">Connext</string>
     <!--
         What the Garmin filter did, and how to undo it. Always shown when it hid something, so the
@@ -114,6 +118,7 @@
 
     <string name="device_label_checking">checking…</string>
     <string name="device_label_connected">connected</string>
+    <string name="device_label_not_connected">not connected</string>
     <string name="device_label_no_answer">no answer, %1$s</string>
     <string name="device_label_answered">answered %1$s</string>
 
@@ -197,6 +202,7 @@
     <string name="credential_replace">Replace credential</string>
     <string name="credential_forget">Forget</string>
     <string name="credential_stored_note">Stored encrypted, and kept out of backups. Forget clears it until the app next starts.</string>
+    <string name="credential_stored_note_ios">Kept encrypted in this device's keychain, and never moved to another device. Forget clears it until the app next starts.</string>
     <string name="credential_missing">no credential imported</string>
     <!-- %1$s says what is wrong, in English, naming the field at fault. -->
     <string name="credential_invalid">That file is not a usable credential: %1$s</string>
@@ -214,6 +220,7 @@
     <string name="about_trademark_body">SendFPL is an independent project by %1$s, not affiliated with or endorsed by Garmin Ltd. Garmin, Connext, GTN, GNX and GNC are their trademarks, used here only to name the equipment this app talks to.</string>
     <string name="about_privacy_title">Privacy</string>
     <string name="about_privacy_body">SendFPL has no network permission. It keeps the credential, the navigator you picked, and which navigators you have uploaded to and when, on this phone only, and uninstalling removes them. On Android 12 and newer, two preferences, the navigator model and whether to list every paired device, follow your data to a new phone.</string>
+    <string name="about_privacy_body_ios">SendFPL does not access the network. It keeps the credential in this device's keychain, and the navigator you picked and which navigators you have uploaded to and when in a file kept out of backups. Deleting the app removes the file, and the first launch after installing it again deletes the credential. The navigator model is a preference, which a backup carries to a new device.</string>
     <string name="about_licence">Free and open source under the MIT licence.</string>
     <string name="about_credential_body">SendFPL carries the credential it authenticates with. If Garmin ever changes it, you can supply your own here without waiting for an update.</string>
     <string name="about_manage_credential">Manage credential</string>
